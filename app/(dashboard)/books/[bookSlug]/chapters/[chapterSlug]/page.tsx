@@ -146,15 +146,13 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
         {query.error ? <FeedbackBanner type="error" message={decodeURIComponent(query.error)} /> : null}
       </div>
 
-      <div className="reader-viewport">
-        <div className="reader-spread">
-          <div className="reader-page-left" aria-hidden="true" />
-          <div className="reader-page-right" aria-hidden="true" />
-          <article className="reader-spread-flow">
-            <MarkdownReader markdown={chapter.markdown} containerId="reader-content" className="reader-spread-content" />
-          </article>
+      <section className="reader-surface">
+        <div className="reader-spread-flat">
+          <div className="reader-page-flat">
+            <MarkdownReader markdown={chapter.markdown} containerId="reader-content" className="reader-spread-flat-content" />
+          </div>
         </div>
-      </div>
+      </section>
 
       <div className="reader-bottom-dock flex items-center justify-between gap-2 px-3 py-2 sm:px-4">
         <div className="flex min-w-[106px] items-center gap-2">
