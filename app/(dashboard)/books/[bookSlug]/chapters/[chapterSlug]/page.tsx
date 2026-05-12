@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { forbidden, notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import rehypeSanitize from "rehype-sanitize";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -7,6 +7,7 @@ import { requireUser } from "@/lib/auth/require-user";
 import { getChapterBySlugs } from "@/lib/content/get-chapter";
 import { canAccessChapter } from "@/lib/permissions/can-access-chapter";
 import { updateProgress } from "@/lib/progress/update-progress";
+import { getCurrentProfile } from "@/lib/auth/get-current-profile";
 
 interface ChapterPageProps {
   params: Promise<{ bookSlug: string; chapterSlug: string }>;
@@ -31,13 +32,16 @@ async function markCompleted(formData: FormData) {
 
 export default async function ChapterPage({ params }: ChapterPageProps) {
   const user = await requireUser();
+  const profile = await getCurrentProfile(user.id);
   const { bookSlug, chapterSlug } = await params;
-  const chapter = await getChapterBySlugs(bookSlug, chapterSlug);
+  const chapter = await getChapterBySlugs(bookSlug, chapterSlug, {
+    includeUnpublished: profile?.role === "admin",
+  });
 
   if (!chapter) notFound();
 
   const allowed = await canAccessChapter(user.id, chapter.id);
-  if (!allowed) forbidden();
+  if (!allowed) redirect("/forbidden");
 
   return (
     <article className="mx-auto w-full max-w-3xl space-y-8">

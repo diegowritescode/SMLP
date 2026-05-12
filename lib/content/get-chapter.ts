@@ -16,7 +16,15 @@ export interface ChapterDetail {
   nextChapterSlug: string | null;
 }
 
-export async function getChapterBySlugs(bookSlug: string, chapterSlug: string): Promise<ChapterDetail | null> {
+interface ChapterQueryOptions {
+  includeUnpublished?: boolean;
+}
+
+export async function getChapterBySlugs(
+  bookSlug: string,
+  chapterSlug: string,
+  options?: ChapterQueryOptions,
+): Promise<ChapterDetail | null> {
   const supabase = await createClient();
 
   const { data: book } = await supabase.from("books").select("id, slug, title").eq("slug", bookSlug).maybeSingle();
@@ -24,11 +32,12 @@ export async function getChapterBySlugs(bookSlug: string, chapterSlug: string): 
 
   const { data: chapters } = await supabase
     .from("chapters")
-    .select("id, slug, title, order_index, file_path, estimated_reading_minutes")
+    .select("id, slug, title, order_index, file_path, estimated_reading_minutes, is_published")
     .eq("book_id", book.id)
     .order("order_index", { ascending: true });
 
-  const list = chapters ?? [];
+  const includeUnpublished = options?.includeUnpublished ?? false;
+  const list = (chapters ?? []).filter((entry) => includeUnpublished || entry.is_published);
   const chapter = list.find((entry) => entry.slug === chapterSlug);
   if (!chapter) return null;
 
@@ -36,8 +45,7 @@ export async function getChapterBySlugs(bookSlug: string, chapterSlug: string): 
   const previous = currentIndex > 0 ? list[currentIndex - 1] : null;
   const next = currentIndex < list.length - 1 ? list[currentIndex + 1] : null;
 
-  const root = process.cwd();
-  const absolutePath = path.join(root, chapter.file_path);
+  const absolutePath = path.join(process.cwd(), chapter.file_path);
   const markdown = await fs.readFile(absolutePath, "utf8");
 
   return {

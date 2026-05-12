@@ -1,4 +1,4 @@
-import { forbidden } from "next/navigation";
+import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth/require-user";
 import { createClient } from "@/lib/supabase/server";
 
@@ -13,7 +13,7 @@ export async function requireAdmin() {
     .maybeSingle();
 
   if (!profile || profile.role !== "admin") {
-    forbidden();
+    redirect("/forbidden");
   }
 
   return user;

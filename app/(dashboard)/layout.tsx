@@ -2,9 +2,13 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { requireUser } from "@/lib/auth/require-user";
 import { signOutAction } from "@/app/(dashboard)/actions";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const user = await requireUser();
+  const supabase = await createClient();
+  const { data: profile } = await supabase.from("profiles").select("role").eq("user_id", user.id).maybeSingle();
+  const isAdmin = profile?.role === "admin";
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-6">
@@ -17,9 +21,11 @@ export default async function DashboardLayout({ children }: { children: ReactNod
           <Link href="/library" className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700">
             Library
           </Link>
-          <Link href="/admin" className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700">
-            Admin
-          </Link>
+          {isAdmin ? (
+            <Link href="/admin" className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700">
+              Admin
+            </Link>
+          ) : null}
           <form action={signOutAction}>
             <button className="rounded-md bg-zinc-900 px-3 py-2 text-sm text-white dark:bg-zinc-100 dark:text-zinc-900" type="submit">
               Logout

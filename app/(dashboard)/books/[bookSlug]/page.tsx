@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { forbidden, notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth/require-user";
 import { getBookBySlug } from "@/lib/content/get-book";
 import { canAccessBook } from "@/lib/permissions/can-access-book";
+import { getCurrentProfile } from "@/lib/auth/get-current-profile";
 
 interface BookPageProps {
   params: Promise<{ bookSlug: string }>;
@@ -16,7 +17,10 @@ export default async function BookPage({ params }: BookPageProps) {
   if (!book) notFound();
 
   const allowed = await canAccessBook(user.id, book.id);
-  if (!allowed) forbidden();
+  if (!allowed) redirect("/forbidden");
+
+  const profile = await getCurrentProfile(user.id);
+  const visibleChapters = profile?.role === "admin" ? book.chapters : book.chapters.filter((chapter) => chapter.isPublished);
 
   return (
     <section className="space-y-6">
@@ -27,7 +31,7 @@ export default async function BookPage({ params }: BookPageProps) {
 
       <div className="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
         <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
-          {book.chapters.map((chapter) => (
+          {visibleChapters.map((chapter) => (
             <li key={chapter.id} className="flex items-center justify-between gap-3 p-4">
               <div>
                 <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
