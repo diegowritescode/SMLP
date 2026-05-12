@@ -20,7 +20,7 @@ export default async function AdminBooksPage({ searchParams }: AdminBooksPagePro
   return (
     <section className="space-y-6">
       <header>
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">Admin · Libros</h1>
+        <h1 className="text-2xl font-semibold text-[var(--text-main)]">Admin · Libros</h1>
       </header>
 
       {params.ok ? <FeedbackBanner type="success" message="Actualizacion aplicada correctamente." /> : null}
@@ -28,16 +28,22 @@ export default async function AdminBooksPage({ searchParams }: AdminBooksPagePro
 
       <div className="space-y-4">
         {(books ?? []).map((book) => (
-          <article key={book.id} className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+          <article
+            key={book.id}
+            className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/90 p-4 shadow-[0_10px_30px_rgba(20,20,16,0.08)]"
+          >
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{book.title}</h2>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">/{book.slug}</p>
+                <h2 className="text-lg font-semibold text-[var(--text-main)]">{book.title}</h2>
+                <p className="text-xs text-[var(--text-muted)]">/{book.slug}</p>
               </div>
               <form action={toggleBookPublished}>
                 <input type="hidden" name="id" value={book.id} />
                 <input type="hidden" name="isPublished" value={String(book.is_published)} />
-                <button className="rounded-md border border-zinc-300 px-3 py-2 text-xs dark:border-zinc-700" type="submit">
+                <button
+                  className="rounded-full border border-[var(--line)] bg-[var(--paper)] px-3 py-2 text-xs text-[var(--text-soft)] transition hover:text-[var(--text-main)]"
+                  type="submit"
+                >
                   {book.is_published ? "Ocultar libro" : "Publicar libro"}
                 </button>
               </form>
@@ -47,14 +53,20 @@ export default async function AdminBooksPage({ searchParams }: AdminBooksPagePro
               {(book.chapters ?? [])
                 .sort((a, b) => a.order_index - b.order_index)
                 .map((chapter) => (
-                  <li key={chapter.id} className="flex items-center justify-between gap-3 rounded-md border border-zinc-200 p-3 dark:border-zinc-800">
-                    <p className="text-sm text-zinc-800 dark:text-zinc-200">
+                  <li
+                    key={chapter.id}
+                    className="flex items-center justify-between gap-3 rounded-xl border border-[var(--line)] bg-[var(--surface)]/72 p-3"
+                  >
+                    <p className="text-sm text-[var(--text-main)]">
                       {chapter.order_index}. {chapter.title}
                     </p>
                     <form action={toggleChapterPublished}>
                       <input type="hidden" name="id" value={chapter.id} />
                       <input type="hidden" name="isPublished" value={String(chapter.is_published)} />
-                      <button className="rounded-md border border-zinc-300 px-2 py-1 text-xs dark:border-zinc-700" type="submit">
+                      <button
+                        className="rounded-full border border-[var(--line)] bg-[var(--paper)] px-3 py-1 text-xs text-[var(--text-soft)] transition hover:text-[var(--text-main)]"
+                        type="submit"
+                      >
                         {chapter.is_published ? "Ocultar" : "Publicar"}
                       </button>
                     </form>
