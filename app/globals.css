@@ -98,7 +98,7 @@ body {
 }
 
 .app-frame {
-  width: min(calc(100vw - 24px), 1720px);
+  width: min(100vw - 24px, 1720px);
   height: calc(100vh - 24px);
   min-height: calc(100dvh - 24px);
   margin: 12px auto;
@@ -231,12 +231,9 @@ body {
   min-height: calc(100dvh - 220px);
   border-radius: 26px;
   border: 1px solid var(--line);
-  background:
-    radial-gradient(circle at 20% 10%, rgba(0, 0, 0, 0.018), transparent 22%),
-    radial-gradient(circle at 85% 35%, rgba(0, 0, 0, 0.014), transparent 22%),
-    var(--paper);
-  box-shadow: var(--shadow-paper);
-  padding: clamp(26px, 4.5vw, 58px);
+  background: #fffdfc;
+  box-shadow: 0 18px 60px rgba(30, 28, 24, 0.1);
+  padding: clamp(32px, 4vw, 64px);
 }
 
 .reader-spread-flow::after {
@@ -412,7 +409,7 @@ body {
 
 @supports selector(:has(*)) {
   .app-frame:has(.reader-root) .dashboard-grid {
-    grid-template-columns: 86px minmax(0, 1fr);
+    grid-template-columns: 72px minmax(0, 1fr);
   }
 }
 
@@ -433,24 +430,19 @@ body {
   .reader-page-right {
     display: block;
     min-height: calc(100dvh - 236px);
-    border-radius: 26px;
-    border: 1px solid var(--line);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.2)),
-      var(--paper);
-    box-shadow: var(--shadow-paper);
+    border-radius: 28px;
+    border: 1px solid rgba(30, 28, 24, 0.1);
+    background: #fffdfc;
+    padding: clamp(32px, 4vw, 64px);
+    box-shadow: 0 18px 60px rgba(30, 28, 24, 0.1);
   }
 
   .reader-page-left {
-    box-shadow:
-      inset -10px 0 16px rgba(0, 0, 0, 0.045),
-      0 14px 30px rgba(0, 0, 0, 0.11);
+    box-shadow: 0 18px 60px rgba(30, 28, 24, 0.1);
   }
 
   .reader-page-right {
-    box-shadow:
-      inset 10px 0 16px rgba(0, 0, 0, 0.045),
-      0 14px 30px rgba(0, 0, 0, 0.11);
+    box-shadow: 0 18px 60px rgba(30, 28, 24, 0.1);
   }
 
   .reader-spread::after {
@@ -461,7 +453,7 @@ body {
     bottom: 20px;
     width: 1px;
     transform: translateX(-0.5px);
-    background: linear-gradient(180deg, transparent, rgba(45, 40, 30, 0.12) 18%, rgba(45, 40, 30, 0.12) 82%, transparent);
+    background: linear-gradient(180deg, transparent, rgba(30, 28, 24, 0.1) 18%, rgba(30, 28, 24, 0.1) 82%, transparent);
     z-index: 1;
     pointer-events: none;
   }
@@ -472,7 +464,7 @@ body {
     background: transparent;
     border: 0;
     box-shadow: none;
-    padding: clamp(26px, 2.2vw, 38px) clamp(24px, 2vw, 34px);
+    padding: clamp(32px, 4vw, 64px);
     min-height: 0;
   }
 
