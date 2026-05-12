@@ -1,35 +1,30 @@
-import { signInWithGoogle } from "@/app/(auth)/actions";
+import { redirect } from "next/navigation";
+import { AuthBrandPanel } from "@/components/auth/auth-brand-panel";
+import { AuthFormCard } from "@/components/auth/auth-form-card";
+import { AuthShell } from "@/components/auth/auth-shell";
+import { getCurrentUser } from "@/lib/auth/get-current-user";
 
 interface LoginPageProps {
-  searchParams: Promise<{ next?: string; error?: string }>;
+  searchParams: Promise<{ next?: string; error?: string; mode?: string; notice?: string; email?: string }>;
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const user = await getCurrentUser();
+  if (user) {
+    redirect("/library");
+  }
+
   const params = await searchParams;
   const nextPath = params.next && params.next.startsWith("/") ? params.next : "/library";
+  const mode = params.mode === "signup" ? "signup" : "signin";
+  const error = params.error ? String(params.error) : undefined;
+  const notice = params.notice ? String(params.notice) : undefined;
+  const emailHint = params.email ? String(params.email) : undefined;
 
   return (
-    <main className="app-shell">
-      <section className="mx-auto flex min-h-[calc(100vh-32px)] w-full max-w-xl items-center justify-center">
-        <div className="w-full rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface)] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.12)]">
-          <div className="space-y-2 text-center">
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">Private Library</p>
-            <h1 className="text-3xl font-semibold text-[var(--text-primary)]">Secure Markdown Reader</h1>
-            <p className="text-sm text-[var(--text-secondary)]">Acceso privado por invitacion.</p>
-          </div>
-
-          <form action={signInWithGoogle} className="mt-6 w-full">
-            <input type="hidden" name="next" value={nextPath} />
-            <button type="submit" className="w-full rounded-full bg-[var(--accent)] px-4 py-3 text-sm font-medium text-zinc-900">
-              Continuar con Google
-            </button>
-          </form>
-
-          {params.error ? (
-            <p className="mt-3 text-center text-xs text-[var(--danger)]">No se pudo iniciar sesion con Google. Intenta nuevamente.</p>
-          ) : null}
-        </div>
-      </section>
-    </main>
+    <AuthShell
+      brand={<AuthBrandPanel />}
+      form={<AuthFormCard mode={mode} nextPath={nextPath} error={error} notice={notice} emailHint={emailHint} />}
+    />
   );
 }
