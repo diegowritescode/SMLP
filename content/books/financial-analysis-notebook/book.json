@@ -1,0 +1,25 @@
+{
+  "title": "Financial Analysis Notebook",
+  "slug": "financial-analysis-notebook",
+  "description": "Notebook de analisis financiero y fundamentos de inversion.",
+  "category": "Finance",
+  "language": "es",
+  "coverImage": null,
+  "isPublished": true,
+  "chapters": [
+    {
+      "title": "Introduccion al analisis financiero",
+      "slug": "introduccion-analisis-financiero",
+      "file": "01-introduccion.md",
+      "order": 1,
+      "isPublished": true
+    },
+    {
+      "title": "Estados financieros esenciales",
+      "slug": "estados-financieros-esenciales",
+      "file": "02-estados-financieros.md",
+      "order": 2,
+      "isPublished": true
+    }
+  ]
+}
