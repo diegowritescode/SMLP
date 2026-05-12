@@ -55,20 +55,17 @@ export default async function BookPage({ params }: BookPageProps) {
   return (
     <section className="space-y-6">
       <header className="space-y-3">
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">{book.title}</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-300">{book.description || "Sin descripcion"}</p>
+        <h1 className="text-3xl font-semibold text-[var(--text-main)]">{book.title}</h1>
+        <p className="max-w-prose text-sm text-[var(--text-soft)]">{book.description || "Sin descripcion"}</p>
         {continueChapter ? (
-          <Link
-            href={`/books/${book.slug}/chapters/${continueChapter.slug}`}
-            className="inline-flex rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
-          >
+          <Link href={`/books/${book.slug}/chapters/${continueChapter.slug}`} className="inline-flex rounded-full bg-[var(--text-main)] px-4 py-2 text-sm font-medium text-[var(--paper)]">
             Continuar en: {continueChapter.title}
           </Link>
         ) : null}
       </header>
 
-      <div className="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-        <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
+      <div className="rounded-3xl border border-[var(--line)] bg-[var(--app-surface)]/90">
+        <ul className="divide-y divide-[var(--line)]">
           {visibleChapters.map((chapter) => {
             const progress = progressMap.get(chapter.id);
             const isCompleted = progress?.isCompleted ?? false;
@@ -78,20 +75,18 @@ export default async function BookPage({ params }: BookPageProps) {
             return (
               <li key={chapter.id} className="flex items-center justify-between gap-3 p-4">
                 <div>
-                  <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                  <p className="text-sm font-medium text-[var(--text-main)]">
                     {chapter.orderIndex}. {chapter.title}
                   </p>
-                  <div className="mt-1 flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  <div className="mt-1 flex items-center gap-2 text-xs text-[var(--text-muted)]">
                     <span>{chapter.estimatedReadingMinutes ?? 1} min</span>
                     <span>•</span>
-                    <span className={isCompleted ? "text-emerald-600 dark:text-emerald-400" : isInProgress ? "text-sky-600 dark:text-sky-400" : ""}>
-                      {label}
-                    </span>
+                    <span className={isCompleted ? "text-[var(--success)]" : isInProgress ? "text-[var(--accent-dark)]" : ""}>{label}</span>
                   </div>
                 </div>
                 <Link
                   href={`/books/${book.slug}/chapters/${chapter.slug}`}
-                  className="rounded-md bg-zinc-900 px-3 py-2 text-xs font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
+                  className="rounded-full border border-[var(--line)] bg-white/85 px-3 py-2 text-xs font-medium text-[var(--text-main)]"
                 >
                   {isCompleted ? "Releer" : isInProgress ? "Continuar" : "Leer"}
                 </Link>

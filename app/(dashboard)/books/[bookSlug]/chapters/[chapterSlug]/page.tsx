@@ -13,6 +13,7 @@ import { ReadingProgressBar } from "@/components/reader/reading-progress-bar";
 import { MarkdownReader } from "@/components/reader/markdown-reader";
 import { FeedbackBanner } from "@/components/ui/feedback-banner";
 import { ChapterVisitTracker } from "@/components/reader/chapter-visit-tracker";
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons";
 
 interface ChapterPageProps {
   params: Promise<{ bookSlug: string; chapterSlug: string }>;
@@ -117,81 +118,92 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
   const isCompleted = Boolean(progress?.is_completed);
 
   return (
-    <section className="relative space-y-6">
+    <section className="relative space-y-4 pb-32 pt-16">
       <ChapterVisitTracker bookId={chapter.bookId} chapterId={chapter.id} />
       <ReadingProgressBar completed={isCompleted} />
 
-      <header className="rounded-2xl border border-zinc-200 bg-gradient-to-br from-zinc-900 to-zinc-700 p-6 text-zinc-100 dark:border-zinc-700">
-        <p className="text-xs uppercase tracking-[0.2em] text-zinc-300">{chapter.bookTitle}</p>
-        <h1 className="mt-2 text-3xl font-semibold leading-tight">{chapter.chapterTitle}</h1>
-        <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-zinc-300">
-          <span>Tiempo estimado: {chapter.estimatedReadingMinutes ?? 1} min</span>
-          <span>•</span>
-          <span>{isCompleted ? "Completado" : "En progreso"}</span>
+      <div className="pointer-events-none fixed inset-x-0 top-4 z-40 flex justify-center px-4">
+        <div className="floating-control pointer-events-auto flex h-12 w-full max-w-[860px] items-center justify-between gap-2 px-3">
+          <div className="flex min-w-0 items-center gap-2">
+            <Link href={`/books/${chapter.bookSlug}`} className="icon-button-soft" aria-label="Back to book">
+              <ChevronLeftIcon className="size-4" />
+            </Link>
+            <div className="hidden min-w-0 sm:block">
+              <p className="truncate text-xs text-[var(--text-soft)]">{chapter.bookTitle}</p>
+              <p className="truncate text-[11px] text-[var(--text-muted)]">{chapter.chapterTitle}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <TableOfContents headings={headings} />
+            <ReaderSettings containerId="reader-content" />
+          </div>
         </div>
-      </header>
+      </div>
 
       {query.ok ? <FeedbackBanner type="success" message="Progreso actualizado correctamente." /> : null}
       {query.error ? <FeedbackBanner type="error" message={decodeURIComponent(query.error)} /> : null}
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_280px]">
-        <article className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <MarkdownReader markdown={chapter.markdown} containerId="reader-content" />
+      <article className="reader-paper">
+        <MarkdownReader markdown={chapter.markdown} containerId="reader-content" />
+      </article>
 
-          {!isCompleted ? (
-            <form action={markCompleted} className="mt-8 rounded-xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-700 dark:bg-zinc-950/50">
+      <div className="reader-bottom-dock flex items-center justify-between gap-2 px-3 py-2 sm:px-4">
+        <div className="flex min-w-[106px] items-center gap-2">
+          {chapter.previousChapterSlug ? (
+            <Link
+              href={`/books/${chapter.bookSlug}/chapters/${chapter.previousChapterSlug}`}
+              className="inline-flex h-9 items-center gap-1 rounded-full border border-[var(--line)] bg-white/80 px-3 text-xs text-[var(--text-soft)]"
+            >
+              <ChevronLeftIcon className="size-3.5" />
+              <span className="hidden sm:inline">Anterior</span>
+            </Link>
+          ) : null}
+        </div>
+
+        {!isCompleted ? (
+          <form action={markCompleted}>
+            <input type="hidden" name="bookSlug" value={chapter.bookSlug} />
+            <input type="hidden" name="chapterSlug" value={chapter.chapterSlug} />
+            <input type="hidden" name="bookId" value={chapter.bookId} />
+            <input type="hidden" name="chapterId" value={chapter.id} />
+            <button type="submit" className="inline-flex h-9 items-center gap-1 rounded-full bg-[var(--accent)] px-3 text-xs font-medium text-zinc-900">
+              <CheckIcon className="size-3.5" />
+              <span className="hidden sm:inline">Marcar completado</span>
+              <span className="sm:hidden">Completar</span>
+            </button>
+          </form>
+        ) : (
+          <span className="inline-flex h-9 items-center gap-1 rounded-full bg-white/75 px-3 text-xs text-[var(--success)]">
+            <CheckIcon className="size-3.5" />
+            Completado
+          </span>
+        )}
+
+        <div className="flex min-w-[106px] items-center justify-end gap-2">
+          {chapter.nextChapterSlug ? (
+            <form action={completeAndGoNext}>
               <input type="hidden" name="bookSlug" value={chapter.bookSlug} />
               <input type="hidden" name="chapterSlug" value={chapter.chapterSlug} />
+              <input type="hidden" name="nextChapterSlug" value={chapter.nextChapterSlug} />
               <input type="hidden" name="bookId" value={chapter.bookId} />
               <input type="hidden" name="chapterId" value={chapter.id} />
-              <button type="submit" className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">
-                Marcar capitulo como completado
+              <button type="submit" className="inline-flex h-9 items-center gap-1 rounded-full bg-[var(--text-main)] px-3 text-xs text-[var(--paper)]">
+                <span className="hidden sm:inline">Siguiente</span>
+                <span className="sm:hidden">Next</span>
+                <ChevronRightIcon className="size-3.5" />
               </button>
             </form>
           ) : (
-            <div className="mt-8 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-200">
-              Capitulo completado.
-            </div>
+            <Link
+              href={`/books/${chapter.bookSlug}`}
+              className="inline-flex h-9 items-center gap-1 rounded-full bg-[var(--text-main)] px-3 text-xs text-[var(--paper)]"
+            >
+              Terminar libro
+              <ChevronRightIcon className="size-3.5" />
+            </Link>
           )}
-
-          <nav className="mt-8 flex items-center justify-between gap-3">
-            {chapter.previousChapterSlug ? (
-              <Link
-                href={`/books/${chapter.bookSlug}/chapters/${chapter.previousChapterSlug}`}
-                className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 dark:border-zinc-700 dark:text-zinc-200"
-              >
-                Capitulo anterior
-              </Link>
-            ) : (
-              <span />
-            )}
-
-            {chapter.nextChapterSlug ? (
-              <form action={completeAndGoNext}>
-                <input type="hidden" name="bookSlug" value={chapter.bookSlug} />
-                <input type="hidden" name="chapterSlug" value={chapter.chapterSlug} />
-                <input type="hidden" name="nextChapterSlug" value={chapter.nextChapterSlug} />
-                <input type="hidden" name="bookId" value={chapter.bookId} />
-                <input type="hidden" name="chapterId" value={chapter.id} />
-                <button type="submit" className="rounded-md bg-zinc-900 px-3 py-2 text-sm text-white dark:bg-zinc-100 dark:text-zinc-900">
-                  Siguiente capitulo
-                </button>
-              </form>
-            ) : (
-              <Link
-                href={`/books/${chapter.bookSlug}`}
-                className="rounded-md bg-zinc-900 px-3 py-2 text-sm text-white dark:bg-zinc-100 dark:text-zinc-900"
-              >
-                Volver al libro
-              </Link>
-            )}
-          </nav>
-        </article>
-
-        <aside className="space-y-4 xl:sticky xl:top-6 xl:self-start">
-          <ReaderSettings containerId="reader-content" />
-          <TableOfContents headings={headings} />
-        </aside>
+        </div>
       </div>
     </section>
   );

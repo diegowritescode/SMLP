@@ -5,40 +5,45 @@ interface BookCardProps {
   book: LibraryBook;
 }
 
+function coverPalette(seed: string) {
+  const value = seed.length % 4;
+  if (value === 0) return "from-slate-700 via-slate-600 to-stone-500";
+  if (value === 1) return "from-emerald-700 via-lime-700 to-teal-600";
+  if (value === 2) return "from-amber-700 via-orange-600 to-stone-600";
+  return "from-indigo-700 via-sky-700 to-cyan-600";
+}
+
 export function BookCard({ book }: BookCardProps) {
   return (
-    <article className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="mb-3 flex items-start justify-between gap-3">
-        <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{book.title}</h3>
-        <span className="rounded-full bg-zinc-100 px-2 py-1 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
-          {book.progressPercent}%
-        </span>
+    <article className="book-card rounded-3xl border border-[var(--line)] bg-[var(--app-surface)] p-3 shadow-[0_18px_40px_rgba(0,0,0,0.10)]">
+      <div className={`book-cover relative overflow-hidden bg-gradient-to-br ${coverPalette(book.slug)}`}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.3),transparent_36%)]" />
+        <div className="absolute inset-y-0 right-0 w-[20%] bg-gradient-to-l from-black/18 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/80">{book.category ?? "Library"}</p>
+          <h3 className="mt-1 line-clamp-3 text-base font-semibold leading-tight">{book.title}</h3>
+        </div>
       </div>
 
-      <p className="mb-4 line-clamp-3 text-sm text-zinc-600 dark:text-zinc-300">{book.description || "Sin descripcion"}</p>
+      <div className="px-2 pb-2 pt-3">
+        <div className="mb-2 flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-muted)]">
+          <span className="rounded-full bg-[var(--surface-muted)] px-2 py-1">{book.chaptersCount} caps</span>
+          <span className="rounded-full bg-[var(--surface-muted)] px-2 py-1">{book.language.toUpperCase()}</span>
+          <span className="rounded-full bg-[var(--surface-muted)] px-2 py-1">{book.progressPercent}%</span>
+        </div>
+        <p className="line-clamp-2 text-sm text-[var(--text-soft)]">{book.description || "Sin descripcion"}</p>
 
-      <div className="mb-4 flex flex-wrap gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-        <span>{book.chaptersCount} capitulos</span>
-        <span>•</span>
-        <span>{book.language.toUpperCase()}</span>
-        {book.category ? (
-          <>
-            <span>•</span>
-            <span>{book.category}</span>
-          </>
-        ) : null}
+        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-muted)]">
+          <div className="h-full rounded-full bg-[var(--accent)]" style={{ width: `${book.progressPercent}%` }} />
+        </div>
+
+        <Link
+          href={`/books/${book.slug}`}
+          className="mt-4 inline-flex rounded-full border border-[var(--line)] bg-white/85 px-4 py-2 text-sm text-[var(--text-main)]"
+        >
+          Abrir libro
+        </Link>
       </div>
-
-      <div className="mb-4 h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
-        <div className="h-full rounded-full bg-emerald-500" style={{ width: `${book.progressPercent}%` }} />
-      </div>
-
-      <Link
-        href={`/books/${book.slug}`}
-        className="inline-flex rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
-      >
-        Abrir libro
-      </Link>
     </article>
   );
 }

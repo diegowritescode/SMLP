@@ -18,7 +18,7 @@ function textFromNode(node: unknown): string {
 
 export function MarkdownReader({ markdown, containerId = "reader-content" }: MarkdownReaderProps) {
   return (
-    <div id={containerId} className="prose prose-zinc dark:prose-invert max-w-none leading-8">
+    <div id={containerId} className="reader-content reader-column">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeSanitize]}
@@ -47,6 +47,16 @@ export function MarkdownReader({ markdown, containerId = "reader-content" }: Mar
               </h3>
             );
           },
+          table: ({ children }) => (
+            <div className="table-wrap">
+              <table>{children}</table>
+            </div>
+          ),
+          a: ({ children, ...props }) => (
+            <a className="text-[var(--accent-dark)] underline decoration-[var(--line-strong)] underline-offset-4" {...props}>
+              {children}
+            </a>
+          ),
         }}
       >
         {markdown}

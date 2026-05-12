@@ -1,45 +1,111 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { TypeIcon } from "@/components/ui/icons";
 
 interface ReaderSettingsProps {
   containerId: string;
 }
 
-const options = [
-  { label: "S", value: "15px" },
-  { label: "M", value: "17px" },
-  { label: "L", value: "19px" },
+const fontOptions = [
+  { label: "S", value: "1.02rem" },
+  { label: "M", value: "1.12rem" },
+  { label: "L", value: "1.22rem" },
+];
+
+const lineHeightOptions = [
+  { label: "Compacto", value: "1.62" },
+  { label: "Normal", value: "1.72" },
+  { label: "Amplio", value: "1.82" },
 ];
 
 export function ReaderSettings({ containerId }: ReaderSettingsProps) {
+  const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
   const [fontSize, setFontSize] = useState(() => {
-    if (typeof window === "undefined") return "17px";
-    return window.localStorage.getItem("reader-font-size") || "17px";
+    if (typeof window === "undefined") return "1.12rem";
+    return window.localStorage.getItem("reader-font-size") || "1.12rem";
+  });
+
+  const [lineHeight, setLineHeight] = useState(() => {
+    if (typeof window === "undefined") return "1.72";
+    return window.localStorage.getItem("reader-line-height") || "1.72";
   });
 
   useEffect(() => {
     const container = document.getElementById(containerId);
     if (!container) return;
-    container.style.fontSize = fontSize;
+    container.style.setProperty("--reader-font-size", fontSize);
     window.localStorage.setItem("reader-font-size", fontSize);
   }, [fontSize, containerId]);
 
+  useEffect(() => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.style.setProperty("--reader-line-height", lineHeight);
+    window.localStorage.setItem("reader-line-height", lineHeight);
+  }, [lineHeight, containerId]);
+
+  useEffect(() => {
+    function onPointerDown(event: MouseEvent) {
+      if (!panelRef.current) return;
+      if (!panelRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", onPointerDown);
+      return () => document.removeEventListener("mousedown", onPointerDown);
+    }
+
+    return;
+  }, [open]);
+
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Lectura</p>
-      <div className="flex items-center gap-2">
-        {options.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            onClick={() => setFontSize(option.value)}
-            className={`rounded-md px-3 py-1 text-xs ${fontSize === option.value ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" : "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200"}`}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
+    <div className="relative" ref={panelRef}>
+      <button type="button" onClick={() => setOpen((value) => !value)} className="icon-button-soft" aria-label="Reader settings">
+        <TypeIcon className="size-4" />
+      </button>
+
+      {open ? (
+        <div className="floating-panel absolute right-0 top-[calc(100%+10px)] z-50 w-[280px] p-4">
+          <p className="mb-2 text-xs uppercase tracking-wide text-[var(--text-muted)]">Ajustes</p>
+
+          <div className="mb-3">
+            <p className="mb-2 text-xs text-[var(--text-soft)]">Tamaño</p>
+            <div className="flex gap-2">
+              {fontOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setFontSize(option.value)}
+                  className={`rounded-full px-3 py-1 text-xs ${fontSize === option.value ? "bg-[var(--accent)] text-zinc-900" : "bg-white/80 text-[var(--text-soft)]"}`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-2 text-xs text-[var(--text-soft)]">Interlineado</p>
+            <div className="flex flex-wrap gap-2">
+              {lineHeightOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setLineHeight(option.value)}
+                  className={`rounded-full px-3 py-1 text-xs ${lineHeight === option.value ? "bg-[var(--accent)] text-zinc-900" : "bg-white/80 text-[var(--text-soft)]"}`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

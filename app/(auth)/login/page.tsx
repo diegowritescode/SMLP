@@ -9,25 +9,27 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const nextPath = params.next && params.next.startsWith("/") ? params.next : "/library";
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center justify-center gap-6 px-6">
-      <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-semibold">Secure Markdown Reader</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">Acceso privado por invitacion.</p>
-      </div>
+    <main className="app-shell">
+      <section className="mx-auto flex min-h-[calc(100vh-32px)] w-full max-w-xl items-center justify-center">
+        <div className="w-full rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface)] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.12)]">
+          <div className="space-y-2 text-center">
+            <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">Private Library</p>
+            <h1 className="text-3xl font-semibold text-[var(--text-primary)]">Secure Markdown Reader</h1>
+            <p className="text-sm text-[var(--text-secondary)]">Acceso privado por invitacion.</p>
+          </div>
 
-      <form action={signInWithGoogle} className="w-full">
-        <input type="hidden" name="next" value={nextPath} />
-        <button
-          type="submit"
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
-        >
-          Continuar con Google
-        </button>
-      </form>
+          <form action={signInWithGoogle} className="mt-6 w-full">
+            <input type="hidden" name="next" value={nextPath} />
+            <button type="submit" className="w-full rounded-full bg-[var(--accent)] px-4 py-3 text-sm font-medium text-zinc-900">
+              Continuar con Google
+            </button>
+          </form>
 
-      {params.error ? (
-        <p className="text-xs text-red-600 dark:text-red-400">No se pudo iniciar sesion con Google. Intenta nuevamente.</p>
-      ) : null}
+          {params.error ? (
+            <p className="mt-3 text-center text-xs text-[var(--danger)]">No se pudo iniciar sesion con Google. Intenta nuevamente.</p>
+          ) : null}
+        </div>
+      </section>
     </main>
   );
 }

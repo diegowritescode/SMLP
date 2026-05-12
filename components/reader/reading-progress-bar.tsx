@@ -25,11 +25,8 @@ export function ReadingProgressBar({ completed }: ReadingProgressBarProps) {
   }, [completed]);
 
   return (
-    <div className="sticky top-0 z-30 h-1 w-full bg-zinc-200/70 dark:bg-zinc-800/70">
-      <div
-        className="h-full bg-emerald-500 transition-[width] duration-150"
-        style={{ width: `${completed ? 100 : progress}%` }}
-      />
+    <div className="sticky top-0 z-30 h-1 w-full bg-[var(--surface-muted)]/80">
+      <div className="h-full bg-[var(--accent)] transition-[width] duration-150" style={{ width: `${completed ? 100 : progress}%` }} />
     </div>
   );
 }
