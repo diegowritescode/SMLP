@@ -1,5 +1,12 @@
 export type ReaderTheme = "clean-paper" | "warm-sepia" | "sage-green" | "graphite-night" | "focus-ink";
-export type ReaderFontFamily = "source-serif" | "literata" | "lora";
+export type ReaderFontFamily =
+  | "source-serif"
+  | "lora"
+  | "merriweather"
+  | "ibm-plex-serif"
+  | "noto-serif"
+  | "inter"
+  | "ibm-plex-sans";
 export type ReaderColumnsMode = "spread" | "single";
 
 export interface ReaderPreferences {
@@ -22,7 +29,15 @@ export const defaultReaderPreferences: ReaderPreferences = {
 };
 
 const allowedThemes = new Set<ReaderTheme>(["clean-paper", "warm-sepia", "sage-green", "graphite-night", "focus-ink"]);
-const allowedFonts = new Set<ReaderFontFamily>(["source-serif", "literata", "lora"]);
+const allowedFonts = new Set<ReaderFontFamily>([
+  "source-serif",
+  "lora",
+  "merriweather",
+  "ibm-plex-serif",
+  "noto-serif",
+  "inter",
+  "ibm-plex-sans",
+]);
 const allowedColumns = new Set<ReaderColumnsMode>(["spread", "single"]);
 const allowedFontSizes = new Set(["1.02rem", "1.1rem", "1.18rem", "1.26rem"]);
 const allowedLineHeights = new Set(["1.65", "1.72", "1.8"]);
@@ -76,9 +91,13 @@ export function saveReaderPreferences(next: Partial<ReaderPreferences>): ReaderP
 }
 
 function fontFamilyValue(font: ReaderFontFamily): string {
-  if (font === "literata") return "var(--font-reader-literata)";
-  if (font === "lora") return "var(--font-reader-lora)";
-  return "var(--font-reader-source-serif)";
+  if (font === "lora") return "var(--font-reader-stack-lora)";
+  if (font === "merriweather") return "var(--font-reader-stack-merriweather)";
+  if (font === "ibm-plex-serif") return "var(--font-reader-stack-ibm-plex-serif)";
+  if (font === "noto-serif") return "var(--font-reader-stack-noto-serif)";
+  if (font === "inter") return "var(--font-reader-stack-inter)";
+  if (font === "ibm-plex-sans") return "var(--font-reader-stack-ibm-plex-sans)";
+  return "var(--font-reader-source)";
 }
 
 export function applyReaderPreferences(preferences: ReaderPreferences) {
@@ -104,4 +123,3 @@ export function resetReaderPreferences(): ReaderPreferences {
   }
   return defaults;
 }
-

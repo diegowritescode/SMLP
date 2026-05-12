@@ -91,8 +91,12 @@
 
   --font-ui: var(--font-ui-inter), "Inter", "Geist", "Manrope", "Avenir Next", "Segoe UI", sans-serif;
   --font-reader-source: var(--font-reader-source-serif), "Source Serif 4", "Georgia", serif;
-  --font-reader-literata: "Literata", "Source Serif 4", "Georgia", serif;
-  --font-reader-alt: var(--font-reader-lora), "Lora", "Source Serif 4", serif;
+  --font-reader-stack-lora: var(--font-reader-lora), "Lora", "Source Serif 4", serif;
+  --font-reader-stack-merriweather: var(--font-reader-merriweather), "Merriweather", "Source Serif 4", serif;
+  --font-reader-stack-noto-serif: var(--font-reader-noto-serif), "Noto Serif", "Source Serif 4", serif;
+  --font-reader-stack-ibm-plex-serif: var(--font-reader-ibm-plex-serif), "IBM Plex Serif", "Source Serif 4", serif;
+  --font-reader-stack-inter: var(--font-ui-inter), "Inter", "Segoe UI", sans-serif;
+  --font-reader-stack-ibm-plex-sans: var(--font-reader-ibm-plex-sans), "IBM Plex Sans", "Inter", sans-serif;
   --font-reader-heading: var(--font-reader-heading-fraunces), "Source Serif 4", serif;
 
   --reader-font-size: 1.1rem;
@@ -570,4 +574,3 @@ body {
     line-height: 1.74;
   }
 }
-

@@ -1,5 +1,14 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Lora, Source_Serif_4 } from "next/font/google";
+import {
+  Fraunces,
+  IBM_Plex_Sans,
+  IBM_Plex_Serif,
+  Inter,
+  Lora,
+  Merriweather,
+  Noto_Serif,
+  Source_Serif_4,
+} from "next/font/google";
 import { ReaderPreferencesSync } from "@/components/layout/reader-preferences-sync";
 import "./globals.css";
 
@@ -26,6 +35,34 @@ const fontReaderAlt = Lora({
   display: "swap",
 });
 
+const fontReaderMerriweather = Merriweather({
+  subsets: ["latin"],
+  variable: "--font-reader-merriweather",
+  weight: ["300", "400", "700", "900"],
+  display: "swap",
+});
+
+const fontReaderNotoSerif = Noto_Serif({
+  subsets: ["latin"],
+  variable: "--font-reader-noto-serif",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const fontReaderIbmPlexSerif = IBM_Plex_Serif({
+  subsets: ["latin"],
+  variable: "--font-reader-ibm-plex-serif",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const fontReaderIbmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  variable: "--font-reader-ibm-plex-sans",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 const fontReaderHeading = Fraunces({
   subsets: ["latin"],
   variable: "--font-reader-heading-fraunces",
@@ -40,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`h-full antialiased ${fontUi.variable} ${fontReaderPrimary.variable} ${fontReaderAlt.variable} ${fontReaderHeading.variable}`}
+      className={`h-full antialiased ${fontUi.variable} ${fontReaderPrimary.variable} ${fontReaderAlt.variable} ${fontReaderMerriweather.variable} ${fontReaderNotoSerif.variable} ${fontReaderIbmPlexSerif.variable} ${fontReaderIbmPlexSans.variable} ${fontReaderHeading.variable}`}
       data-reader-theme="clean-paper"
       data-reader-columns="spread"
     >

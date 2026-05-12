@@ -22,9 +22,13 @@ const themeOptions: Array<{ value: ReaderTheme; label: string; colors: [string, 
 ];
 
 const fontOptions: Array<{ value: ReaderFontFamily; label: string }> = [
-  { value: "source-serif", label: "Source Serif" },
-  { value: "literata", label: "Literata" },
+  { value: "source-serif", label: "Source Serif 4" },
   { value: "lora", label: "Lora" },
+  { value: "merriweather", label: "Merriweather" },
+  { value: "noto-serif", label: "Noto Serif" },
+  { value: "ibm-plex-serif", label: "IBM Plex Serif" },
+  { value: "inter", label: "Inter (Tech)" },
+  { value: "ibm-plex-sans", label: "IBM Plex Sans (Tech)" },
 ];
 
 const fontSizeOptions = [

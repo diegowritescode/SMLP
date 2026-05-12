@@ -9,6 +9,13 @@ interface MarkdownReaderProps {
   className?: string;
 }
 
+interface HastLikeNode {
+  type?: string;
+  tagName?: string;
+  value?: string;
+  children?: HastLikeNode[];
+}
+
 function textFromNode(node: unknown): string {
   if (!node || typeof node !== "object") return "";
   const n = node as { children?: unknown[]; value?: string };
@@ -21,6 +28,21 @@ function isNumericLike(value: string): boolean {
   const normalized = value.replace(/\s+/g, " ").trim();
   if (!normalized) return false;
   return /^[$€£]?\s*-?\d[\d.,\s]*(%|x|bps)?$/i.test(normalized);
+}
+
+function isStandaloneImageParagraph(node: unknown): boolean {
+  if (!node || typeof node !== "object") return false;
+  const n = node as HastLikeNode;
+  if (!Array.isArray(n.children)) return false;
+
+  const meaningfulChildren = n.children.filter((child) => {
+    if (child.type !== "text") return true;
+    return typeof child.value !== "string" || child.value.trim() !== "";
+  });
+
+  if (meaningfulChildren.length !== 1) return false;
+  const candidate = meaningfulChildren[0];
+  return candidate.type === "element" && (candidate.tagName === "img" || candidate.tagName === "picture");
 }
 
 export function MarkdownReader({ markdown, containerId = "reader-content", className = "" }: MarkdownReaderProps) {
@@ -55,9 +77,7 @@ export function MarkdownReader({ markdown, containerId = "reader-content", class
             );
           },
           p: ({ node, children, ...props }) => {
-            const n = node as { children?: Array<{ type?: string }> };
-            const singleImage = Array.isArray(n.children) && n.children.length === 1 && n.children[0]?.type === "image";
-            if (singleImage) return <>{children}</>;
+            if (isStandaloneImageParagraph(node)) return <>{children}</>;
             return <p {...props}>{children}</p>;
           },
           img: ({ src, alt, title }) => {
