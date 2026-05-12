@@ -24,10 +24,17 @@ npm install
 npm run dev
 ```
 
+Si migraste entre `middleware.ts` y `proxy.ts` y ves errores stale, usa:
+
+```bash
+npm run dev:clean
+```
+
 ## Scripts
 
 - `npm run validate:content`
 - `npm run sync:content`
+- `npm run dev:clean`
 - `npm run lint`
 - `npm run build`
 
@@ -64,6 +71,6 @@ npm run dev
 
 ## Notas tecnicas
 
-- En este proyecto se mantiene `middleware.ts` por estabilidad runtime con Turbopack en entorno local actual.
+- En Next.js 16 se usa `proxy.ts`; si el dev server muestra cache stale, reiniciar y limpiar `.next`.
 - El lector usa sanitizacion con `rehype-sanitize`.
 - Warning de Turbopack por lectura de archivos markdown desde disco: no bloquea build.

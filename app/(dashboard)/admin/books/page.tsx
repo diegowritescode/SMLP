@@ -1,9 +1,15 @@
+import { FeedbackBanner } from "@/components/ui/feedback-banner";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { createClient } from "@/lib/supabase/server";
 import { toggleBookPublished, toggleChapterPublished } from "@/app/(dashboard)/admin/actions";
 
-export default async function AdminBooksPage() {
+interface AdminBooksPageProps {
+  searchParams: Promise<{ ok?: string; error?: string }>;
+}
+
+export default async function AdminBooksPage({ searchParams }: AdminBooksPageProps) {
   await requireAdmin();
+  const params = await searchParams;
   const supabase = await createClient();
 
   const { data: books } = await supabase
@@ -16,6 +22,9 @@ export default async function AdminBooksPage() {
       <header>
         <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">Admin · Libros</h1>
       </header>
+
+      {params.ok ? <FeedbackBanner type="success" message="Actualizacion aplicada correctamente." /> : null}
+      {params.error ? <FeedbackBanner type="error" message={decodeURIComponent(params.error)} /> : null}
 
       <div className="space-y-4">
         {(books ?? []).map((book) => (

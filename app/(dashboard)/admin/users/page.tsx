@@ -1,3 +1,4 @@
+import { FeedbackBanner } from "@/components/ui/feedback-banner";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { createClient } from "@/lib/supabase/server";
 import { createAccessGrant, revokeAccessGrant } from "@/app/(dashboard)/admin/actions";
@@ -11,8 +12,13 @@ interface GrantRow {
   books: { title: string }[] | { title: string } | null;
 }
 
-export default async function AdminUsersPage() {
+interface AdminUsersPageProps {
+  searchParams: Promise<{ ok?: string; error?: string }>;
+}
+
+export default async function AdminUsersPage({ searchParams }: AdminUsersPageProps) {
   await requireAdmin();
+  const params = await searchParams;
   const supabase = await createClient();
 
   const [{ data: users }, { data: books }, { data: grantsRaw }] = await Promise.all([
@@ -30,6 +36,9 @@ export default async function AdminUsersPage() {
       <header>
         <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">Admin · Usuarios y Access Grants</h1>
       </header>
+
+      {params.ok ? <FeedbackBanner type="success" message="Operacion completada correctamente." /> : null}
+      {params.error ? <FeedbackBanner type="error" message={decodeURIComponent(params.error)} /> : null}
 
       <article className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
         <h2 className="mb-3 text-base font-semibold text-zinc-900 dark:text-zinc-100">Crear grant manual</h2>
@@ -86,22 +95,22 @@ export default async function AdminUsersPage() {
             const profileEmail = Array.isArray(grant.profiles) ? grant.profiles[0]?.email : grant.profiles?.email;
             const bookTitle = Array.isArray(grant.books) ? grant.books[0]?.title : grant.books?.title;
             return (
-            <li key={grant.id} className="flex flex-col gap-2 rounded-md border border-zinc-200 p-3 text-sm dark:border-zinc-800 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="font-medium text-zinc-900 dark:text-zinc-100">
-                  {profileEmail ?? "usuario"} → {bookTitle ?? "libro"}
-                </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                  {grant.access_type} | inicio: {new Date(grant.starts_at).toLocaleString()} | expira: {grant.expires_at ? new Date(grant.expires_at).toLocaleString() : "sin expiracion"}
-                </p>
-              </div>
-              <form action={revokeAccessGrant}>
-                <input type="hidden" name="id" value={grant.id} />
-                <button type="submit" className="rounded-md border border-red-300 px-3 py-2 text-xs text-red-600 dark:border-red-700 dark:text-red-400">
-                  Revocar
-                </button>
-              </form>
-            </li>
+              <li key={grant.id} className="flex flex-col gap-2 rounded-md border border-zinc-200 p-3 text-sm dark:border-zinc-800 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="font-medium text-zinc-900 dark:text-zinc-100">
+                    {profileEmail ?? "usuario"} → {bookTitle ?? "libro"}
+                  </p>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                    {grant.access_type} | inicio: {new Date(grant.starts_at).toLocaleString()} | expira: {grant.expires_at ? new Date(grant.expires_at).toLocaleString() : "sin expiracion"}
+                  </p>
+                </div>
+                <form action={revokeAccessGrant}>
+                  <input type="hidden" name="id" value={grant.id} />
+                  <button type="submit" className="rounded-md border border-red-300 px-3 py-2 text-xs text-red-600 dark:border-red-700 dark:text-red-400">
+                    Revocar
+                  </button>
+                </form>
+              </li>
             );
           })}
         </ul>

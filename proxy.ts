@@ -7,7 +7,7 @@ function isProtectedPath(pathname: string) {
   return PROTECTED_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { response, supabase } = await updateSession(request);
 
   if (!isProtectedPath(request.nextUrl.pathname)) {

@@ -1,8 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { createClient } from "@/lib/supabase/server";
+
+function asErrorMessage(error: unknown) {
+  if (error instanceof Error) return encodeURIComponent(error.message);
+  return encodeURIComponent("Unexpected error");
+}
 
 export async function toggleBookPublished(formData: FormData) {
   await requireAdmin();
@@ -10,14 +16,26 @@ export async function toggleBookPublished(formData: FormData) {
 
   const id = String(formData.get("id") || "");
   const isPublished = String(formData.get("isPublished") || "") === "true";
-  if (!id) throw new Error("Missing book id");
+  if (!id) {
+    redirect("/admin/books?error=Missing%20book%20id");
+  }
 
-  const { error } = await supabase.from("books").update({ is_published: !isPublished }).eq("id", id);
-  if (error) throw new Error(`Unable to update book publication: ${error.message}`);
+  let actionError: unknown;
+  try {
+    const { error } = await supabase.from("books").update({ is_published: !isPublished }).eq("id", id);
+    if (error) throw new Error(`Unable to update book publication: ${error.message}`);
+  } catch (error) {
+    actionError = error;
+  }
+
+  if (actionError) {
+    redirect(`/admin/books?error=${asErrorMessage(actionError)}`);
+  }
 
   revalidatePath("/admin");
   revalidatePath("/admin/books");
   revalidatePath("/library");
+  redirect("/admin/books?ok=book_updated");
 }
 
 export async function toggleChapterPublished(formData: FormData) {
@@ -26,13 +44,25 @@ export async function toggleChapterPublished(formData: FormData) {
 
   const id = String(formData.get("id") || "");
   const isPublished = String(formData.get("isPublished") || "") === "true";
-  if (!id) throw new Error("Missing chapter id");
+  if (!id) {
+    redirect("/admin/books?error=Missing%20chapter%20id");
+  }
 
-  const { error } = await supabase.from("chapters").update({ is_published: !isPublished }).eq("id", id);
-  if (error) throw new Error(`Unable to update chapter publication: ${error.message}`);
+  let actionError: unknown;
+  try {
+    const { error } = await supabase.from("chapters").update({ is_published: !isPublished }).eq("id", id);
+    if (error) throw new Error(`Unable to update chapter publication: ${error.message}`);
+  } catch (error) {
+    actionError = error;
+  }
+
+  if (actionError) {
+    redirect(`/admin/books?error=${asErrorMessage(actionError)}`);
+  }
 
   revalidatePath("/admin");
   revalidatePath("/admin/books");
+  redirect("/admin/books?ok=chapter_updated");
 }
 
 export async function createAccessGrant(formData: FormData) {
@@ -44,24 +74,35 @@ export async function createAccessGrant(formData: FormData) {
   const accessType = String(formData.get("accessType") || "manual");
   const expiresAt = String(formData.get("expiresAt") || "").trim();
 
-  if (!userId || !bookId) throw new Error("Missing user or book for grant");
+  if (!userId || !bookId) {
+    redirect("/admin/users?error=Missing%20user%20or%20book%20for%20grant");
+  }
 
-  const { error } = await supabase.from("access_grants").upsert(
-    {
-      user_id: userId,
-      book_id: bookId,
-      access_type: accessType,
-      starts_at: new Date().toISOString(),
-      expires_at: expiresAt.length > 0 ? new Date(expiresAt).toISOString() : null,
-    },
-    { onConflict: "user_id,book_id,access_type" },
-  );
+  let actionError: unknown;
+  try {
+    const { error } = await supabase.from("access_grants").upsert(
+      {
+        user_id: userId,
+        book_id: bookId,
+        access_type: accessType,
+        starts_at: new Date().toISOString(),
+        expires_at: expiresAt.length > 0 ? new Date(expiresAt).toISOString() : null,
+      },
+      { onConflict: "user_id,book_id,access_type" },
+    );
+    if (error) throw new Error(`Unable to create access grant: ${error.message}`);
+  } catch (error) {
+    actionError = error;
+  }
 
-  if (error) throw new Error(`Unable to create access grant: ${error.message}`);
+  if (actionError) {
+    redirect(`/admin/users?error=${asErrorMessage(actionError)}`);
+  }
 
   revalidatePath("/admin");
   revalidatePath("/admin/users");
   revalidatePath("/library");
+  redirect("/admin/users?ok=grant_created");
 }
 
 export async function revokeAccessGrant(formData: FormData) {
@@ -69,12 +110,24 @@ export async function revokeAccessGrant(formData: FormData) {
   const supabase = await createClient();
 
   const id = String(formData.get("id") || "");
-  if (!id) throw new Error("Missing grant id");
+  if (!id) {
+    redirect("/admin/users?error=Missing%20grant%20id");
+  }
 
-  const { error } = await supabase.from("access_grants").delete().eq("id", id);
-  if (error) throw new Error(`Unable to revoke access grant: ${error.message}`);
+  let actionError: unknown;
+  try {
+    const { error } = await supabase.from("access_grants").delete().eq("id", id);
+    if (error) throw new Error(`Unable to revoke access grant: ${error.message}`);
+  } catch (error) {
+    actionError = error;
+  }
+
+  if (actionError) {
+    redirect(`/admin/users?error=${asErrorMessage(actionError)}`);
+  }
 
   revalidatePath("/admin");
   revalidatePath("/admin/users");
   revalidatePath("/library");
+  redirect("/admin/users?ok=grant_revoked");
 }
