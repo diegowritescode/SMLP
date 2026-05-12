@@ -7,7 +7,7 @@ interface ContinueReadingCardProps {
 
 export function ContinueReadingCard({ item }: ContinueReadingCardProps) {
   return (
-    <section className="overflow-hidden rounded-3xl border border-[var(--line)] bg-[linear-gradient(120deg,rgba(255,255,255,0.9),rgba(233,220,194,0.5))] p-5 shadow-[0_16px_42px_rgba(0,0,0,0.08)]">
+    <section className="overflow-hidden rounded-3xl border border-[var(--line)] bg-[linear-gradient(120deg,rgba(255,255,255,0.95),rgba(233,244,235,0.62))] p-5 shadow-[0_16px_42px_rgba(0,0,0,0.08)]">
       <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">Continue Reading</p>
       <div className="mt-3 grid gap-4 sm:grid-cols-[120px_1fr] sm:items-center">
         <div className="book-cover rounded-2xl bg-gradient-to-br from-zinc-700 via-zinc-600 to-zinc-500" />

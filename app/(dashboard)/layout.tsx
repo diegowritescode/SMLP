@@ -18,10 +18,10 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   return (
     <main className="app-shell">
       <div className="app-frame">
-        <div className="grid min-h-[calc(100vh-32px)] md:grid-cols-[210px_1fr]">
+        <div className="dashboard-grid">
           <AppSidebar isAdmin={isAdmin} userEmail={user.email ?? null} />
 
-          <section className="relative px-4 pb-20 pt-4 md:px-8 md:pb-8 md:pt-6">
+          <section className="dashboard-main relative px-4 pb-20 pt-4 md:px-8 md:pb-8 md:pt-6">
             <DashboardHeader userEmail={user.email ?? ""} />
             {children}
           </section>

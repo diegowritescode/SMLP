@@ -118,12 +118,12 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
   const isCompleted = Boolean(progress?.is_completed);
 
   return (
-    <section className="relative space-y-4 pb-32 pt-16">
+    <section className="reader-root relative space-y-4 pb-36 pt-14 md:pt-16">
       <ChapterVisitTracker bookId={chapter.bookId} chapterId={chapter.id} />
       <ReadingProgressBar completed={isCompleted} />
 
-      <div className="pointer-events-none fixed inset-x-0 top-4 z-40 flex justify-center px-4">
-        <div className="floating-control pointer-events-auto flex h-12 w-full max-w-[860px] items-center justify-between gap-2 px-3">
+      <div className="reader-controls-top">
+        <div className="floating-control pointer-events-auto flex items-center justify-between gap-2 px-3">
           <div className="flex min-w-0 items-center gap-2">
             <Link href={`/books/${chapter.bookSlug}`} className="icon-button-soft" aria-label="Back to book">
               <ChevronLeftIcon className="size-4" />
@@ -141,12 +141,20 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
         </div>
       </div>
 
-      {query.ok ? <FeedbackBanner type="success" message="Progreso actualizado correctamente." /> : null}
-      {query.error ? <FeedbackBanner type="error" message={decodeURIComponent(query.error)} /> : null}
+      <div className="mx-auto mt-2 flex w-full max-w-[820px] flex-col gap-2 px-2">
+        {query.ok ? <FeedbackBanner type="success" message="Progreso actualizado correctamente." /> : null}
+        {query.error ? <FeedbackBanner type="error" message={decodeURIComponent(query.error)} /> : null}
+      </div>
 
-      <article className="reader-paper">
-        <MarkdownReader markdown={chapter.markdown} containerId="reader-content" />
-      </article>
+      <div className="reader-viewport">
+        <div className="reader-spread">
+          <div className="reader-page-left" aria-hidden="true" />
+          <div className="reader-page-right" aria-hidden="true" />
+          <article className="reader-spread-flow">
+            <MarkdownReader markdown={chapter.markdown} containerId="reader-content" className="reader-spread-content" />
+          </article>
+        </div>
+      </div>
 
       <div className="reader-bottom-dock flex items-center justify-between gap-2 px-3 py-2 sm:px-4">
         <div className="flex min-w-[106px] items-center gap-2">
@@ -159,6 +167,10 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
               <span className="hidden sm:inline">Anterior</span>
             </Link>
           ) : null}
+        </div>
+
+        <div className="hidden min-w-[140px] items-center justify-center rounded-full border border-[var(--line)] bg-white/76 px-3 py-1 text-center text-[11px] text-[var(--text-soft)] md:inline-flex">
+          {isCompleted ? "100% completado" : "Lectura en curso"}
         </div>
 
         {!isCompleted ? (

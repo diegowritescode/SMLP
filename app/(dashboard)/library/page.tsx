@@ -37,7 +37,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
   });
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 pb-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div className="space-y-2">
           <h1 className="text-3xl font-semibold text-[var(--text-main)]">Biblioteca</h1>
@@ -99,7 +99,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
           </article>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6">
           {filteredBooks.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}

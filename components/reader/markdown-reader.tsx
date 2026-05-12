@@ -6,6 +6,7 @@ import { slugify } from "@/lib/utils/slugify";
 interface MarkdownReaderProps {
   markdown: string;
   containerId?: string;
+  className?: string;
 }
 
 function textFromNode(node: unknown): string {
@@ -16,9 +17,9 @@ function textFromNode(node: unknown): string {
   return n.children.map(textFromNode).join(" ");
 }
 
-export function MarkdownReader({ markdown, containerId = "reader-content" }: MarkdownReaderProps) {
+export function MarkdownReader({ markdown, containerId = "reader-content", className = "" }: MarkdownReaderProps) {
   return (
-    <div id={containerId} className="reader-content reader-column">
+    <div id={containerId} className={`reader-content reader-column ${className}`.trim()}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeSanitize]}
