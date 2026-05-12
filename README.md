@@ -8,16 +8,6 @@ Base inicial del MVP privado con arquitectura SaaS minima.
 - Tailwind CSS
 - Supabase Auth + PostgreSQL + RLS
 
-## Rutas base
-
-- `/login`
-- `/library`
-- `/books/[bookSlug]`
-- `/books/[bookSlug]/chapters/[chapterSlug]`
-- `/progress`
-- `/settings`
-- `/admin`
-
 ## Variables de entorno
 
 Copia `.env.example` a `.env.local` y completa:
@@ -25,6 +15,7 @@ Copia `.env.example` a `.env.local` y completa:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` o `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+- `NEXT_PUBLIC_APP_URL=http://localhost:3000`
 
 ## Desarrollo
 
@@ -33,39 +24,46 @@ npm install
 npm run dev
 ```
 
-## Estado implementado
+## Scripts
 
-- Fase 0: estructura de contenido.
-- Fase 1: setup tecnico y rutas protegidas.
-- Fase 2: DB + RLS + policies.
-- Fase 3: sync-content real a Supabase.
-- Fase 4: biblioteca server-side con filtros.
-- Fase 5: lector markdown seguro + progreso.
-- Fase 6: admin MVP (libros, capitulos, usuarios, grants).
+- `npm run validate:content`
+- `npm run sync:content`
+- `npm run lint`
+- `npm run build`
 
-## Pruebas manuales recomendadas
+## Estado por fases
 
-1. Usuario sin sesion
-- Abrir `/library` debe redirigir a `/login`.
+- Fase 0: completada.
+- Fase 1: completada.
+- Fase 2: completada.
+- Fase 3: completada.
+- Fase 4: completada.
+- Fase 5: completada.
+- Fase 6: completada.
+- Fase 7: completada.
 
-2. Usuario reader sin grants
-- Login exitoso.
-- `/library` carga sin libros o sin libros restringidos.
-- `/admin` debe devolver 403.
+## QA manual minima
 
-3. Usuario reader con grant activo
-- En `/admin/users`, crear grant manual para un libro publicado.
-- Reader entra a `/library` y ve el libro.
-- Puede abrir `/books/<bookSlug>` y `/books/<bookSlug>/chapters/<chapterSlug>`.
-- Puede marcar capitulo como completado.
+1. Sin sesion: `/library` redirige a `/login`.
+2. Login Google: autentica y vuelve a `/library`.
+3. Reader sin grant: no ve libros, no ve boton admin.
+4. Reader en `/admin`: redirige a `/forbidden`.
+5. Admin: puede publicar/ocultar libros y capitulos.
+6. Admin: puede crear/revocar grants.
+7. Reader con grant: ve libro, abre capitulo y puede marcar completado.
 
-4. Usuario admin
-- `/admin` accesible.
-- En `/admin/books`, toggles de publicar/ocultar funcionan.
-- En `/admin/users`, crear y revocar grants funciona.
+## Seguridad checklist
 
-## Notas
+- [x] Markdown no se expone desde `/public`.
+- [x] Rutas privadas requieren sesion.
+- [x] Rutas admin requieren rol `admin` en DB.
+- [x] RLS habilitado en tablas sensibles.
+- [x] Service role key solo en servidor.
+- [x] Usuarios no pueden gestionar sus propios grants.
+- [x] Reader no ve capitulos no publicados.
 
-- Contenido markdown privado en `content/books` (nunca en `/public`).
-- Acceso a contenido validado en servidor.
-- Advertencia actual de Next 16: `middleware.ts` migrara a `proxy.ts` en una iteracion futura.
+## Notas tecnicas
+
+- En este proyecto se mantiene `middleware.ts` por estabilidad runtime con Turbopack en entorno local actual.
+- El lector usa sanitizacion con `rehype-sanitize`.
+- Warning de Turbopack por lectura de archivos markdown desde disco: no bloquea build.

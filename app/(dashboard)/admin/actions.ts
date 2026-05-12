@@ -10,9 +10,11 @@ export async function toggleBookPublished(formData: FormData) {
 
   const id = String(formData.get("id") || "");
   const isPublished = String(formData.get("isPublished") || "") === "true";
-  if (!id) return;
+  if (!id) throw new Error("Missing book id");
 
-  await supabase.from("books").update({ is_published: !isPublished }).eq("id", id);
+  const { error } = await supabase.from("books").update({ is_published: !isPublished }).eq("id", id);
+  if (error) throw new Error(`Unable to update book publication: ${error.message}`);
+
   revalidatePath("/admin");
   revalidatePath("/admin/books");
   revalidatePath("/library");
@@ -24,9 +26,11 @@ export async function toggleChapterPublished(formData: FormData) {
 
   const id = String(formData.get("id") || "");
   const isPublished = String(formData.get("isPublished") || "") === "true";
-  if (!id) return;
+  if (!id) throw new Error("Missing chapter id");
 
-  await supabase.from("chapters").update({ is_published: !isPublished }).eq("id", id);
+  const { error } = await supabase.from("chapters").update({ is_published: !isPublished }).eq("id", id);
+  if (error) throw new Error(`Unable to update chapter publication: ${error.message}`);
+
   revalidatePath("/admin");
   revalidatePath("/admin/books");
 }
@@ -40,9 +44,9 @@ export async function createAccessGrant(formData: FormData) {
   const accessType = String(formData.get("accessType") || "manual");
   const expiresAt = String(formData.get("expiresAt") || "").trim();
 
-  if (!userId || !bookId) return;
+  if (!userId || !bookId) throw new Error("Missing user or book for grant");
 
-  await supabase.from("access_grants").upsert(
+  const { error } = await supabase.from("access_grants").upsert(
     {
       user_id: userId,
       book_id: bookId,
@@ -52,6 +56,8 @@ export async function createAccessGrant(formData: FormData) {
     },
     { onConflict: "user_id,book_id,access_type" },
   );
+
+  if (error) throw new Error(`Unable to create access grant: ${error.message}`);
 
   revalidatePath("/admin");
   revalidatePath("/admin/users");
@@ -63,9 +69,11 @@ export async function revokeAccessGrant(formData: FormData) {
   const supabase = await createClient();
 
   const id = String(formData.get("id") || "");
-  if (!id) return;
+  if (!id) throw new Error("Missing grant id");
 
-  await supabase.from("access_grants").delete().eq("id", id);
+  const { error } = await supabase.from("access_grants").delete().eq("id", id);
+  if (error) throw new Error(`Unable to revoke access grant: ${error.message}`);
+
   revalidatePath("/admin");
   revalidatePath("/admin/users");
   revalidatePath("/library");
