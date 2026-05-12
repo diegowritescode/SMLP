@@ -6,7 +6,7 @@ export function GoogleButton({ label = "Continue with Google" }: GoogleButtonPro
   return (
     <button
       type="submit"
-      className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)] px-4 text-sm font-medium text-[var(--text-main)] transition hover:bg-white"
+      className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-[#d8d8d2] bg-white px-4 text-sm font-medium text-[#141414] transition hover:border-[#cfcfc8]"
     >
       <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
         <path
@@ -30,4 +30,3 @@ export function GoogleButton({ label = "Continue with Google" }: GoogleButtonPro
     </button>
   );
 }
-

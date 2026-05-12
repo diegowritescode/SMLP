@@ -43,27 +43,27 @@ export function AuthFormCard({ mode, nextPath, error, notice, emailHint }: AuthF
   const signupHref = `/login?mode=signup&next=${encodeURIComponent(nextPath)}`;
 
   return (
-    <section className="w-full max-w-[560px] rounded-[30px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[0_30px_80px_rgba(20,20,16,0.12)] md:p-8">
+    <section className="w-full max-w-[460px]">
       <div className="mb-6 space-y-3">
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">Learning Library</p>
-        <h2 className="text-3xl font-semibold text-[var(--text-main)]">{mode === "signup" ? "Create your account" : "Welcome back"}</h2>
-        <p className="text-sm text-[var(--text-soft)]">
+        <p className="text-xs uppercase tracking-[0.2em] text-[#7a7a73]">Learning Library</p>
+        <h2 className="text-3xl font-semibold text-[#131313]">{mode === "signup" ? "Create your account" : "Welcome back"}</h2>
+        <p className="text-sm text-[#686864]">
           {mode === "signup"
             ? "Create a secure account to access notebooks and study guides."
             : "Sign in to continue your private study workflow."}
         </p>
       </div>
 
-      <div className="mb-5 inline-flex rounded-full border border-[var(--line)] bg-[var(--paper)] p-1 text-sm">
+      <div className="mb-5 inline-flex rounded-full border border-[#deded8] bg-[#f6f6f2] p-1 text-sm">
         <Link
           href={signinHref}
-          className={`rounded-full px-4 py-2 transition ${mode === "signin" ? "bg-[var(--text-main)] text-[var(--paper)]" : "text-[var(--text-soft)]"}`}
+          className={`rounded-full px-4 py-2 transition ${mode === "signin" ? "bg-[#111111] text-white" : "text-[#5f5f59]"}`}
         >
           Sign in
         </Link>
         <Link
           href={signupHref}
-          className={`rounded-full px-4 py-2 transition ${mode === "signup" ? "bg-[var(--text-main)] text-[var(--paper)]" : "text-[var(--text-soft)]"}`}
+          className={`rounded-full px-4 py-2 transition ${mode === "signup" ? "bg-[#111111] text-white" : "text-[#5f5f59]"}`}
         >
           Create account
         </Link>
@@ -78,4 +78,3 @@ export function AuthFormCard({ mode, nextPath, error, notice, emailHint }: AuthF
     </section>
   );
 }
-

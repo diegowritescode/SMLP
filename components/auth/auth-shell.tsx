@@ -7,12 +7,14 @@ interface AuthShellProps {
 
 export function AuthShell({ brand, form }: AuthShellProps) {
   return (
-    <main className="app-shell">
-      <section className="mx-auto grid min-h-[100dvh] w-full max-w-[1320px] items-stretch gap-4 p-4 md:grid-cols-[1.04fr_0.96fr] md:p-6 lg:p-8">
-        <div className="hidden md:block">{brand}</div>
-        <div className="flex items-center justify-center">{form}</div>
+    <main className="min-h-[100dvh] bg-[#f7f7f4]">
+      <section className="grid min-h-[100dvh] w-full lg:grid-cols-[minmax(360px,38vw)_1fr]">
+        <div className="hidden lg:block">{brand}</div>
+        <div className="flex min-h-[100dvh] flex-col bg-white">
+          <div className="relative h-48 overflow-hidden lg:hidden">{brand}</div>
+          <div className="flex flex-1 items-center justify-center px-6 py-8 sm:px-10">{form}</div>
+        </div>
       </section>
     </main>
   );
 }
-

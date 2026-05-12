@@ -1,41 +1,34 @@
+import Image from "next/image";
+
 export function AuthBrandPanel() {
   return (
-    <aside className="relative h-full overflow-hidden rounded-[30px] border border-[var(--line)] bg-[linear-gradient(155deg,rgba(255,255,255,0.92),rgba(228,242,233,0.7))] p-8 shadow-[0_30px_80px_rgba(20,20,16,0.10)]">
-      <div className="absolute -left-14 top-10 size-48 rounded-full bg-[var(--accent-soft)]/70 blur-2xl" />
-      <div className="absolute bottom-8 right-0 size-56 rounded-full bg-white/55 blur-2xl" />
+    <aside className="relative h-full overflow-hidden">
+      <Image
+        src="/auth/auth-study-hero.jpg"
+        alt="Study desk with notebook and laptop"
+        fill
+        priority
+        className="object-cover"
+        sizes="(max-width: 1024px) 100vw, 38vw"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(165deg,rgba(8,10,14,0.38)_0%,rgba(8,10,14,0.22)_34%,rgba(8,10,14,0.70)_100%)]" />
 
-      <div className="relative z-10 flex h-full flex-col justify-between">
-        <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)]/90 px-4 py-2 text-xs tracking-[0.18em] text-[var(--text-muted)]">
-            SECURE READER
-          </div>
-
-          <div className="space-y-4">
-            <h1 className="max-w-[18ch] text-4xl font-semibold leading-tight text-[var(--text-main)] lg:text-5xl">
-              Learning library for serious study work.
-            </h1>
-            <p className="max-w-[52ch] text-sm text-[var(--text-soft)] lg:text-base">
-              Access financial notebooks, strategy guides and private learning resources with invitation-based permissions.
-            </p>
-          </div>
+      <div className="relative z-10 flex h-full flex-col justify-between p-6 text-white md:p-8 lg:p-10">
+        <div>
+          <p className="inline-flex items-center rounded-full border border-white/30 bg-black/20 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
+            Secure Reader
+          </p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
-          <article className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/88 p-4">
-            <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">Protected</p>
-            <p className="mt-1 text-sm font-medium text-[var(--text-main)]">Private resources</p>
-          </article>
-          <article className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/88 p-4">
-            <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">Track</p>
-            <p className="mt-1 text-sm font-medium text-[var(--text-main)]">Study progress</p>
-          </article>
-          <article className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/88 p-4">
-            <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">Focused</p>
-            <p className="mt-1 text-sm font-medium text-[var(--text-main)]">Editorial reader</p>
-          </article>
+        <div className="space-y-2 lg:space-y-3">
+          <h1 className="max-w-[20ch] text-2xl font-semibold leading-tight text-white sm:text-3xl lg:text-4xl">
+            Turn every notebook into focused learning.
+          </h1>
+          <p className="max-w-[52ch] text-sm text-white/85 lg:text-base">
+            Private financial notebooks, strategies and learning resources in one secure reader.
+          </p>
         </div>
       </div>
     </aside>
   );
 }
-
