@@ -17,6 +17,12 @@ function textFromNode(node: unknown): string {
   return n.children.map(textFromNode).join(" ");
 }
 
+function isNumericLike(value: string): boolean {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (!normalized) return false;
+  return /^[$€£]?\s*-?\d[\d.,\s]*(%|x|bps)?$/i.test(normalized);
+}
+
 export function MarkdownReader({ markdown, containerId = "reader-content", className = "" }: MarkdownReaderProps) {
   return (
     <div id={containerId} className={`reader-content reader-column ${className}`.trim()}>
@@ -48,11 +54,46 @@ export function MarkdownReader({ markdown, containerId = "reader-content", class
               </h3>
             );
           },
+          p: ({ node, children, ...props }) => {
+            const n = node as { children?: Array<{ type?: string }> };
+            const singleImage = Array.isArray(n.children) && n.children.length === 1 && n.children[0]?.type === "image";
+            if (singleImage) return <>{children}</>;
+            return <p {...props}>{children}</p>;
+          },
+          img: ({ src, alt, title }) => {
+            const safeSrc = typeof src === "string" ? src : "";
+            if (!safeSrc) return null;
+            const caption = title?.trim() || alt?.trim() || "";
+
+            return (
+              <figure>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={safeSrc} alt={alt || "Imagen del capitulo"} title={title} loading="lazy" className="reader-figure-image" />
+                {caption ? <figcaption>{caption}</figcaption> : null}
+              </figure>
+            );
+          },
           table: ({ children }) => (
             <div className="table-wrap">
               <table>{children}</table>
             </div>
           ),
+          th: ({ node, children, className, ...props }) => {
+            const numeric = isNumericLike(textFromNode(node));
+            return (
+              <th className={`${className ?? ""} ${numeric ? "number-col" : ""}`.trim()} {...props}>
+                {children}
+              </th>
+            );
+          },
+          td: ({ node, children, className, ...props }) => {
+            const numeric = isNumericLike(textFromNode(node));
+            return (
+              <td className={`${className ?? ""} ${numeric ? "number-col" : ""}`.trim()} {...props}>
+                {children}
+              </td>
+            );
+          },
           a: ({ children, ...props }) => (
             <a className="text-[var(--accent-dark)] underline decoration-[var(--line-strong)] underline-offset-4" {...props}>
               {children}

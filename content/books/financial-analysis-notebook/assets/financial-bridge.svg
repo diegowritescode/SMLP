@@ -1,0 +1,50 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6F0"/>
+      <stop offset="1" stop-color="#FAFCF8"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#9BC455"/>
+      <stop offset="1" stop-color="#7AA540"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#B3CC76"/>
+      <stop offset="1" stop-color="#8EAF56"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect x="90" y="110" width="1420" height="680" rx="32" fill="#FFFFFF" stroke="rgba(24,24,21,0.12)"/>
+  <text x="150" y="190" fill="#1E241F" font-size="44" font-family="Inter, Arial, sans-serif" font-weight="600">
+    Puente de Rentabilidad Operativa (Demo)
+  </text>
+  <text x="150" y="238" fill="#596458" font-size="26" font-family="Inter, Arial, sans-serif">
+    Evolución trimestral de margen EBIT y caja operativa normalizada
+  </text>
+
+  <line x1="180" y1="690" x2="1420" y2="690" stroke="rgba(24,24,21,0.22)" stroke-width="2"/>
+  <line x1="180" y1="310" x2="180" y2="690" stroke="rgba(24,24,21,0.22)" stroke-width="2"/>
+
+  <rect x="270" y="500" width="120" height="190" rx="16" fill="url(#bar1)"/>
+  <rect x="480" y="430" width="120" height="260" rx="16" fill="url(#bar2)"/>
+  <rect x="690" y="360" width="120" height="330" rx="16" fill="url(#bar1)"/>
+  <rect x="900" y="395" width="120" height="295" rx="16" fill="url(#bar2)"/>
+  <rect x="1110" y="330" width="120" height="360" rx="16" fill="url(#bar1)"/>
+
+  <polyline points="330,470 540,405 750,345 960,375 1170,318" fill="none" stroke="#2F3A2C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="330" cy="470" r="10" fill="#2F3A2C"/>
+  <circle cx="540" cy="405" r="10" fill="#2F3A2C"/>
+  <circle cx="750" cy="345" r="10" fill="#2F3A2C"/>
+  <circle cx="960" cy="375" r="10" fill="#2F3A2C"/>
+  <circle cx="1170" cy="318" r="10" fill="#2F3A2C"/>
+
+  <text x="292" y="740" fill="#3C463D" font-size="24" font-family="Inter, Arial, sans-serif">Q1</text>
+  <text x="502" y="740" fill="#3C463D" font-size="24" font-family="Inter, Arial, sans-serif">Q2</text>
+  <text x="712" y="740" fill="#3C463D" font-size="24" font-family="Inter, Arial, sans-serif">Q3</text>
+  <text x="922" y="740" fill="#3C463D" font-size="24" font-family="Inter, Arial, sans-serif">Q4</text>
+  <text x="1132" y="740" fill="#3C463D" font-size="24" font-family="Inter, Arial, sans-serif">Q5</text>
+
+  <text x="1240" y="352" fill="#2F3A2C" font-size="22" font-family="Inter, Arial, sans-serif">Margen EBIT</text>
+  <text x="1240" y="385" fill="#5F6A60" font-size="22" font-family="Inter, Arial, sans-serif">Caja Operativa</text>
+</svg>

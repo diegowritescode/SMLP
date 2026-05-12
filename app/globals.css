@@ -1,23 +1,86 @@
 @import "tailwindcss";
 
-:root {
-  --bg-outside: #e8f1ec;
-  --app-surface: #fffdf8;
-  --sidebar-surface: #f7f4ec;
+:root,
+:root[data-reader-theme="clean-paper"] {
+  --bg: #e8f1ec;
+  --surface: #fffdf8;
   --paper: #fffdfc;
   --paper-soft: #faf8f1;
-  --paper-speckle: rgba(52, 48, 39, 0.03);
-
   --text-main: #181815;
   --text-soft: #686258;
-  --text-muted: #938d82;
-
+  --muted: #938d82;
+  --line: rgba(30, 28, 24, 0.1);
+  --line-strong: rgba(30, 28, 24, 0.16);
   --accent: #9bc455;
   --accent-soft: #e8f2d6;
   --accent-dark: #6f8f34;
+}
 
-  --line: rgba(30, 28, 24, 0.1);
-  --line-strong: rgba(30, 28, 24, 0.16);
+:root[data-reader-theme="warm-sepia"] {
+  --bg: #efe9de;
+  --surface: #fffcf5;
+  --paper: #fffbf2;
+  --paper-soft: #f7f1e2;
+  --text-main: #23201c;
+  --text-soft: #72685d;
+  --muted: #9a8f81;
+  --line: rgba(44, 36, 26, 0.12);
+  --line-strong: rgba(44, 36, 26, 0.2);
+  --accent: #b79e57;
+  --accent-soft: #efe3c7;
+  --accent-dark: #77663d;
+}
+
+:root[data-reader-theme="sage-green"] {
+  --bg: #e5efe8;
+  --surface: #fefcf7;
+  --paper: #fffdf7;
+  --paper-soft: #f1f7ef;
+  --text-main: #152017;
+  --text-soft: #5e6d62;
+  --muted: #819083;
+  --line: rgba(24, 37, 26, 0.12);
+  --line-strong: rgba(24, 37, 26, 0.2);
+  --accent: #89b05f;
+  --accent-soft: #dcebcc;
+  --accent-dark: #4f6e34;
+}
+
+:root[data-reader-theme="graphite-night"] {
+  --bg: #131518;
+  --surface: #1d2025;
+  --paper: #21252a;
+  --paper-soft: #292d33;
+  --text-main: #ece9e1;
+  --text-soft: #b6b0a6;
+  --muted: #8f897f;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.22);
+  --accent: #aacd69;
+  --accent-soft: rgba(151, 186, 94, 0.24);
+  --accent-dark: #d2e7a4;
+}
+
+:root[data-reader-theme="focus-ink"] {
+  --bg: #edf1f4;
+  --surface: #f8fafc;
+  --paper: #ffffff;
+  --paper-soft: #f4f7fb;
+  --text-main: #111319;
+  --text-soft: #576072;
+  --muted: #7d8698;
+  --line: rgba(17, 19, 25, 0.13);
+  --line-strong: rgba(17, 19, 25, 0.21);
+  --accent: #5f9d5f;
+  --accent-soft: rgba(95, 157, 95, 0.16);
+  --accent-dark: #3f6f3f;
+}
+
+:root {
+  --bg-outside: var(--bg);
+  --app-surface: var(--surface);
+  --sidebar-surface: color-mix(in srgb, var(--surface) 84%, var(--paper-soft) 16%);
+  --paper-speckle: rgba(52, 48, 39, 0.03);
 
   --danger: #c2410c;
   --success: #4d7c0f;
@@ -26,52 +89,24 @@
   --shadow-paper: 0 18px 46px rgba(15, 20, 17, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.86);
   --shadow: var(--shadow-soft);
 
-  --font-ui: "Inter", "Geist", "Manrope", "Avenir Next", "Segoe UI", sans-serif;
-  --font-reader: "Source Serif 4", "Literata", "Lora", "Georgia", serif;
-  --font-reader-heading: "Fraunces", "Cormorant Garamond", "Source Serif 4", serif;
+  --font-ui: var(--font-ui-inter), "Inter", "Geist", "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  --font-reader-source: var(--font-reader-source-serif), "Source Serif 4", "Georgia", serif;
+  --font-reader-literata: "Literata", "Source Serif 4", "Georgia", serif;
+  --font-reader-alt: var(--font-reader-lora), "Lora", "Source Serif 4", serif;
+  --font-reader-heading: var(--font-reader-heading-fraunces), "Source Serif 4", serif;
 
-  /* Backwards compatibility aliases */
+  --reader-font-size: 1.1rem;
+  --reader-line-height: 1.72;
+  --reader-font-family: var(--font-reader-source);
+
+  /* Compatibility aliases */
   --background: var(--bg-outside);
-  --background-soft: #eff4ef;
-  --surface: var(--app-surface);
-  --surface-muted: #f4f2ec;
-  --surface-elevated: rgba(255, 255, 255, 0.74);
+  --background-soft: color-mix(in srgb, var(--bg-outside) 72%, white 28%);
+  --surface-muted: color-mix(in srgb, var(--surface) 80%, var(--paper-soft) 20%);
+  --surface-elevated: color-mix(in srgb, var(--surface) 82%, transparent);
   --text-primary: var(--text-main);
   --text-secondary: var(--text-soft);
-  --border-subtle: var(--line);
-  --border-soft: var(--line-strong);
-}
-
-.dark {
-  --bg-outside: #10130f;
-  --app-surface: #1f221d;
-  --sidebar-surface: #2a2c25;
-  --paper: #1f211b;
-  --paper-soft: #272922;
-  --paper-speckle: rgba(255, 255, 255, 0.026);
-
-  --text-main: #f2f0e8;
-  --text-soft: #c8c2b5;
-  --text-muted: #999284;
-
-  --accent: #9bc455;
-  --accent-soft: #324022;
-  --accent-dark: #d4ebb2;
-
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.16);
-
-  --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.35), 0 4px 16px rgba(0, 0, 0, 0.25);
-  --shadow-paper: 0 16px 38px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --shadow: var(--shadow-soft);
-
-  --background: var(--bg-outside);
-  --background-soft: #171a15;
-  --surface: var(--app-surface);
-  --surface-muted: #2a2c25;
-  --surface-elevated: rgba(35, 37, 32, 0.76);
-  --text-primary: var(--text-main);
-  --text-secondary: var(--text-soft);
+  --text-muted: var(--muted);
   --border-subtle: var(--line);
   --border-soft: var(--line-strong);
 }
@@ -82,20 +117,20 @@
   --font-sans: var(--font-ui);
 }
 
+html,
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 body {
   color: var(--text-main);
   font-family: var(--font-ui);
   background:
     radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.78), transparent 24%),
-    radial-gradient(circle at 78% 12%, rgba(226, 239, 232, 0.82), transparent 30%),
-    radial-gradient(circle at 56% 96%, rgba(232, 240, 231, 0.76), transparent 34%),
+    radial-gradient(circle at 78% 12%, color-mix(in srgb, var(--accent-soft) 48%, transparent), transparent 30%),
+    radial-gradient(circle at 56% 96%, color-mix(in srgb, var(--paper-soft) 65%, transparent), transparent 34%),
     var(--bg-outside);
-}
-
-html,
-body {
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .app-shell {
@@ -109,7 +144,6 @@ body {
 .app-frame {
   width: 100vw;
   max-width: none;
-  height: auto;
   min-height: 100dvh;
   margin: 0;
   border-radius: 0;
@@ -145,7 +179,7 @@ body {
 .sidebar-link[data-active="true"] {
   color: var(--text-main);
   transform: translateX(2px);
-  background: rgba(255, 255, 255, 0.82);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
 }
 
 .mobile-nav-link {
@@ -161,21 +195,21 @@ body {
 
 .mobile-nav-link[data-active="true"] {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.86);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
 }
 
 .floating-control {
   border-radius: 999px;
-  background: rgba(247, 248, 245, 0.78);
+  background: color-mix(in srgb, var(--paper) 76%, transparent);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(24, 24, 20, 0.1);
+  border: 1px solid var(--line);
   box-shadow: 0 8px 22px rgba(24, 28, 20, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.78);
 }
 
 .floating-panel {
   border-radius: 20px;
   border: 1px solid var(--line);
-  background: rgba(250, 251, 248, 0.92);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
   backdrop-filter: blur(22px);
   box-shadow: 0 20px 40px rgba(18, 24, 20, 0.14);
 }
@@ -184,7 +218,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  background: rgba(248, 249, 245, 0.82);
+  background: color-mix(in srgb, var(--paper) 74%, transparent);
   border: 1px solid var(--line);
   backdrop-filter: blur(14px);
   display: inline-flex;
@@ -197,7 +231,7 @@ body {
 .icon-button-soft:hover {
   transform: translateY(-1px);
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.96);
+  background: color-mix(in srgb, var(--paper) 95%, transparent);
 }
 
 .reader-root {
@@ -224,12 +258,12 @@ body {
 .reader-surface {
   width: 100%;
   min-height: 100dvh;
-  background: #fffdfc;
+  background: var(--paper);
   border: none;
   box-shadow: none;
   border-radius: 0;
   padding: clamp(32px, 5vw, 72px);
-  padding-bottom: 140px;
+  padding-bottom: 152px;
 }
 
 .reader-spread-flat {
@@ -253,9 +287,9 @@ body {
 }
 
 .reader-content {
-  font-family: var(--font-reader);
-  font-size: var(--reader-font-size, clamp(1.04rem, 1.2vw, 1.18rem));
-  line-height: var(--reader-line-height, 1.72);
+  font-family: var(--reader-font-family);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
   letter-spacing: -0.002em;
   color: var(--text-main);
   position: relative;
@@ -282,24 +316,26 @@ body {
   text-wrap: balance;
   break-inside: avoid;
   page-break-inside: avoid;
+  font-weight: 620;
 }
 
 .reader-content h1 {
   margin: 0 0 0.72em;
-  font-size: clamp(1.9rem, 2.8vw, 3.1rem);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.72rem, 2.35vw, 2.45rem);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
 }
 
 .reader-content h2 {
-  margin: 2.15em 0 0.72em;
-  font-size: clamp(1.42rem, 2vw, 2.05rem);
-  line-height: 1.14;
+  margin: 2em 0 0.72em;
+  font-size: clamp(1.3rem, 1.8vw, 1.72rem);
+  line-height: 1.2;
 }
 
 .reader-content h3 {
-  margin: 1.8em 0 0.62em;
-  font-size: 1.2rem;
+  margin: 1.7em 0 0.62em;
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 1.25;
 }
 
 .reader-content p,
@@ -320,16 +356,6 @@ body {
   margin: 0 0 1.05em;
 }
 
-.reader-content blockquote {
-  margin: 1.8em auto;
-  padding: 1.05em 1.35em;
-  max-width: 92%;
-  font-style: italic;
-  color: var(--text-soft);
-  background: color-mix(in srgb, var(--accent-soft) 52%, white 48%);
-  border-radius: 14px;
-}
-
 .reader-content ul,
 .reader-content ol {
   margin: 0.95em 0 1.3em 1.2em;
@@ -340,12 +366,44 @@ body {
   margin-top: 0.42em;
 }
 
+.reader-content blockquote {
+  margin: 1.8em auto;
+  padding: 1.05em 1.35em;
+  max-width: 94%;
+  font-style: italic;
+  color: var(--text-soft);
+  background: color-mix(in srgb, var(--accent-soft) 54%, transparent);
+  border-left: 3px solid color-mix(in srgb, var(--accent) 72%, transparent);
+  border-radius: 14px;
+}
+
+.reader-content figure {
+  margin: 1.85em 0;
+}
+
+.reader-content .reader-figure-image {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 28px rgba(30, 28, 24, 0.08);
+}
+
+.reader-content figcaption {
+  margin-top: 0.65rem;
+  font-family: var(--font-ui);
+  font-size: 0.79rem;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--text-soft);
+}
+
 .reader-content .table-wrap {
   margin: 1.8em 0;
   overflow-x: auto;
   border-radius: 14px;
   border: 1px solid var(--line);
-  background: #fff;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
 }
 
 .reader-content table {
@@ -353,18 +411,30 @@ body {
   border-collapse: separate;
   border-spacing: 0;
   font-family: var(--font-ui);
-  font-size: 0.91rem;
+  font-size: 0.9rem;
 }
 
 .reader-content th {
-  background: #f5f4ef;
+  background: color-mix(in srgb, var(--surface) 80%, var(--paper-soft) 20%);
   font-weight: 640;
+  text-align: left;
 }
 
 .reader-content th,
 .reader-content td {
   padding: 11px 13px;
   border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.reader-content tr:last-child td {
+  border-bottom: 0;
+}
+
+.reader-content td.number-col,
+.reader-content th.number-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .reader-content pre {
@@ -375,13 +445,15 @@ body {
   background: #171717;
   color: #f5f5f5;
   font-size: 0.9rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 .reader-content code:not(pre code) {
   padding: 0.17em 0.35em;
   border-radius: 7px;
-  background: rgba(0, 0, 0, 0.06);
+  background: color-mix(in srgb, var(--line) 45%, transparent);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
 }
 
 .reader-bottom-dock {
@@ -392,7 +464,7 @@ body {
   width: min(760px, calc(100vw - 30px));
   min-height: 58px;
   border-radius: 18px;
-  background: rgba(248, 249, 245, 0.82);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
   backdrop-filter: blur(20px);
   border: 1px solid var(--line);
   box-shadow: 0 14px 32px rgba(16, 22, 18, 0.16);
@@ -414,6 +486,13 @@ body {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16), inset -8px 0 16px rgba(0, 0, 0, 0.08);
 }
 
+.reader-theme-swatch {
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
 @supports selector(:has(*)) {
   .app-frame:has(.reader-root) .dashboard-grid {
     grid-template-columns: 72px minmax(0, 1fr);
@@ -421,9 +500,15 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .reader-content.reader-spread-flat-content {
+  :root[data-reader-columns="single"] .reader-content.reader-spread-flat-content {
+    column-count: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  :root[data-reader-columns="spread"] .reader-content.reader-spread-flat-content {
     column-count: 2;
-    column-width: 560px;
+    column-width: 540px;
     column-gap: clamp(56px, 7vw, 120px);
     column-fill: balance;
   }
@@ -481,7 +566,8 @@ body {
   }
 
   .reader-content {
-    font-size: 1.05rem;
-    line-height: 1.75;
+    font-size: 1.04rem;
+    line-height: 1.74;
   }
 }
+

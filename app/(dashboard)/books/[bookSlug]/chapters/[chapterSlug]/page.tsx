@@ -136,7 +136,7 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
 
           <div className="flex items-center gap-2">
             <TableOfContents headings={headings} />
-            <ReaderSettings containerId="reader-content" />
+            <ReaderSettings />
           </div>
         </div>
       </div>
