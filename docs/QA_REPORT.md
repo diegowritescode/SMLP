@@ -46,7 +46,19 @@ Branch: `develop`
 - Resultado esperado: `reading_progress` upsert con `is_completed = true`.
 - Resultado: OK.
 
-9. Seguridad de contenido
+9. Auto tracking por visita de capitulo
+- Resultado esperado: al abrir capitulo se registra progreso inicial (en curso).
+- Resultado: OK.
+
+10. Auto-completado al pasar al siguiente capitulo
+- Resultado esperado: al presionar "Siguiente capitulo" se marca el actual como completado.
+- Resultado: OK.
+
+11. Estado visible por capitulo en vista de libro
+- Resultado esperado: cada capitulo muestra `Pendiente`, `En curso` o `Completado`.
+- Resultado: OK.
+
+12. Seguridad de contenido
 - Resultado esperado: markdown no expuesto desde `/public`.
 - Resultado: OK.
 

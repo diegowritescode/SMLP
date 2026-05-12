@@ -1,23 +1,35 @@
-import { CategoryFilter } from "@/components/library/category-filter";
 import { BookCard } from "@/components/library/book-card";
 import { ContinueReadingCard } from "@/components/library/continue-reading-card";
+import { LibraryFilters } from "@/components/library/library-filters";
 import { requireUser } from "@/lib/auth/require-user";
 import { getLibraryData } from "@/lib/content/get-library-data";
 
 interface LibraryPageProps {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; language?: string; status?: string }>;
 }
 
 export default async function LibraryPage({ searchParams }: LibraryPageProps) {
   const user = await requireUser();
-  const { category } = await searchParams;
-  const selectedCategory = category?.trim() || null;
+  const { category, language, status } = await searchParams;
+
+  const selectedCategory = category?.trim() || "";
+  const selectedLanguage = language?.trim() || "";
+  const selectedStatus = status?.trim() || "";
 
   const data = await getLibraryData(user.id);
 
-  const filteredBooks = selectedCategory
-    ? data.books.filter((book) => (book.category ?? "") === selectedCategory)
-    : data.books;
+  const filteredBooks = data.books.filter((book) => {
+    const byCategory = !selectedCategory || (book.category ?? "") === selectedCategory;
+    const byLanguage = !selectedLanguage || book.language === selectedLanguage;
+
+    const byStatus =
+      !selectedStatus ||
+      (selectedStatus === "completed" && book.progressPercent >= 100) ||
+      (selectedStatus === "in_progress" && book.progressPercent > 0 && book.progressPercent < 100) ||
+      (selectedStatus === "not_started" && book.progressPercent === 0);
+
+    return byCategory && byLanguage && byStatus;
+  });
 
   return (
     <section className="space-y-6">
@@ -28,7 +40,13 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
 
       {data.continueReading ? <ContinueReadingCard item={data.continueReading} /> : null}
 
-      <CategoryFilter categories={data.categories} selectedCategory={selectedCategory} />
+      <LibraryFilters
+        categories={data.categories}
+        languages={data.languages}
+        selectedCategory={selectedCategory}
+        selectedLanguage={selectedLanguage}
+        selectedStatus={selectedStatus}
+      />
 
       {filteredBooks.length === 0 ? (
         <div className="rounded-xl border border-dashed border-zinc-300 p-8 text-center text-sm text-zinc-600 dark:border-zinc-700 dark:text-zinc-300">

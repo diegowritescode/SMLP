@@ -22,6 +22,7 @@ export interface ContinueReadingItem {
 export interface LibraryData {
   books: LibraryBook[];
   categories: string[];
+  languages: string[];
   continueReading: ContinueReadingItem | null;
 }
 
@@ -45,7 +46,7 @@ export async function getLibraryData(userId: string): Promise<LibraryData> {
   }
 
   if (!profile) {
-    return { books: [], categories: [], continueReading: null };
+    return { books: [], categories: [], languages: [], continueReading: null };
   }
 
   const isAdmin = profile.role === "admin";
@@ -67,7 +68,7 @@ export async function getLibraryData(userId: string): Promise<LibraryData> {
 
     allowedBookIds = (grants ?? []).map((grant) => grant.book_id);
     if (allowedBookIds.length === 0) {
-      return { books: [], categories: [], continueReading: null };
+      return { books: [], categories: [], languages: [], continueReading: null };
     }
   }
 
@@ -89,7 +90,7 @@ export async function getLibraryData(userId: string): Promise<LibraryData> {
   const books = booksRaw ?? [];
 
   if (books.length === 0) {
-    return { books: [], categories: [], continueReading: null };
+    return { books: [], categories: [], languages: [], continueReading: null };
   }
 
   const bookIds = books.map((book) => book.id);
@@ -176,10 +177,12 @@ export async function getLibraryData(userId: string): Promise<LibraryData> {
     })[0];
 
   const categories = [...new Set(libraryBooks.map((book) => book.category).filter(Boolean) as string[])].sort();
+  const languages = [...new Set(libraryBooks.map((book) => book.language).filter(Boolean))].sort();
 
   return {
     books: libraryBooks,
     categories,
+    languages,
     continueReading: continueCandidate
       ? {
           bookSlug: continueCandidate.slug,
