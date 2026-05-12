@@ -138,3 +138,38 @@ export function GridIcon(props: IconProps) {
     </BaseIcon>
   );
 }
+
+export function BookmarkIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M7 5.5A1.5 1.5 0 0 1 8.5 4h7A1.5 1.5 0 0 1 17 5.5V20l-5-3-5 3V5.5Z" />
+    </BaseIcon>
+  );
+}
+
+export function CollectionIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <rect x="4.5" y="6" width="15" height="12.5" rx="1.7" />
+      <path d="M8 3.8h8" />
+      <path d="M8 10h8" />
+      <path d="M8 14h5.5" />
+    </BaseIcon>
+  );
+}
+
+export function SparkleIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M12 3.8v3.4" />
+      <path d="m8.8 8.8-2.4-2.4" />
+      <path d="M3.8 12h3.4" />
+      <path d="m8.8 15.2-2.4 2.4" />
+      <path d="M12 20.2v-3.4" />
+      <path d="m15.2 15.2 2.4 2.4" />
+      <path d="M20.2 12h-3.4" />
+      <path d="m15.2 8.8 2.4-2.4" />
+      <circle cx="12" cy="12" r="2.2" />
+    </BaseIcon>
+  );
+}

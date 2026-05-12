@@ -28,7 +28,7 @@ export function MobileNav({ isAdmin }: MobileNavProps) {
       </Link>
       <Link className="mobile-nav-link" data-active={isActive(pathname, "/progress")} href="/progress">
         <ProgressIcon className="size-3.5" />
-        Progress
+        Study
       </Link>
       <Link className="mobile-nav-link" data-active={isActive(pathname, "/settings")} href="/settings">
         <SettingsIcon className="size-3.5" />

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LibraryIcon, ProgressIcon, SettingsIcon } from "@/components/ui/icons";
+import { BookmarkIcon, CollectionIcon, LibraryIcon, ProgressIcon, SettingsIcon, SparkleIcon } from "@/components/ui/icons";
 
 interface AppSidebarProps {
   isAdmin: boolean;
@@ -17,6 +17,20 @@ function isActive(pathname: string, href: string) {
 export function AppSidebar({ isAdmin, userEmail }: AppSidebarProps) {
   const pathname = usePathname();
   const isReaderMode = pathname.includes("/chapters/");
+  const email = userEmail ?? "reader@private.library";
+  const nameSeed = email.split("@")[0] || "reader";
+  const displayName = nameSeed
+    .split(/[._-]/g)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((chunk) => chunk[0]?.toUpperCase() + chunk.slice(1))
+    .join(" ");
+  const initials = nameSeed
+    .split(/[._-]/g)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((chunk) => chunk[0]?.toUpperCase())
+    .join("");
 
   return (
     <aside
@@ -28,21 +42,41 @@ export function AppSidebar({ isAdmin, userEmail }: AppSidebarProps) {
         {isReaderMode ? (
           <p className="text-[10px] uppercase tracking-[0.18em] text-[var(--text-muted)]">Read</p>
         ) : (
-          <>
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--text-muted)]">Private Library</p>
-            <p className="mt-2 line-clamp-2 text-sm text-[var(--text-soft)]">{userEmail}</p>
-          </>
+          <article className="rounded-3xl border border-[var(--line)] bg-[var(--paper)]/90 p-3 shadow-[0_10px_26px_rgba(20,20,16,0.08)]">
+            <div className="flex items-center gap-3">
+              <div className="inline-flex size-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-sm font-semibold text-[var(--accent-dark)]">
+                {initials || "R"}
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">Welcome Back</p>
+                <p className="truncate text-sm font-medium text-[var(--text-main)]">{displayName || "Reader"}</p>
+                <p className="truncate text-xs text-[var(--text-soft)]">{email}</p>
+              </div>
+            </div>
+          </article>
         )}
       </div>
 
       <nav className={`flex-1 space-y-2 ${isReaderMode ? "w-full px-1.5" : "px-4"}`}>
         <Link className="sidebar-link" data-active={isActive(pathname, "/library")} href="/library">
           <LibraryIcon className="size-4" />
-          {isReaderMode ? null : <span>Library</span>}
+          {isReaderMode ? null : <span>Learning Library</span>}
+        </Link>
+        <Link className="sidebar-link" data-active={pathname === "/library"} href="/library#continue-learning">
+          <SparkleIcon className="size-4" />
+          {isReaderMode ? null : <span>Continue Learning</span>}
+        </Link>
+        <Link className="sidebar-link" data-active={pathname === "/library"} href="/library#learning-collections">
+          <CollectionIcon className="size-4" />
+          {isReaderMode ? null : <span>Collections</span>}
+        </Link>
+        <Link className="sidebar-link" data-active={pathname === "/library"} href="/library?status=in_progress">
+          <BookmarkIcon className="size-4" />
+          {isReaderMode ? null : <span>Saved</span>}
         </Link>
         <Link className="sidebar-link" data-active={isActive(pathname, "/progress")} href="/progress">
           <ProgressIcon className="size-4" />
-          {isReaderMode ? null : <span>Progress</span>}
+          {isReaderMode ? null : <span>Study Progress</span>}
         </Link>
         <Link className="sidebar-link" data-active={isActive(pathname, "/settings")} href="/settings">
           <SettingsIcon className="size-4" />
@@ -57,7 +91,7 @@ export function AppSidebar({ isAdmin, userEmail }: AppSidebarProps) {
       </nav>
 
       <div className={isReaderMode ? "pb-2 text-[10px] text-[var(--text-muted)]" : "p-4 text-[11px] text-[var(--text-muted)]"}>
-        {isReaderMode ? "•" : "Kindle style reader"}
+        {isReaderMode ? "•" : "Secure Reader · Learning Library"}
       </div>
     </aside>
   );

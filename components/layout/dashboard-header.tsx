@@ -12,7 +12,7 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ userEmail }: DashboardHeaderProps) {
   const pathname = usePathname();
 
-  if (pathname.includes("/chapters/")) {
+  if (pathname.includes("/chapters/") || pathname === "/library") {
     return null;
   }
 
