@@ -54,19 +54,22 @@ export default async function BookPage({ params }: BookPageProps) {
 
   return (
     <section className="space-y-6 pb-8">
-      <header className="rounded-3xl border border-[#d8d8d2] bg-white p-5 shadow-[0_12px_30px_rgba(20,20,16,0.06)]">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-[#808078]">Resource</p>
-        <h1 className="mt-2 text-3xl font-semibold text-[#151515]">{book.title}</h1>
-        <p className="mt-2 max-w-prose text-sm text-[#66665f]">{book.description || "Sin descripcion"}</p>
+      <header className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[0_12px_30px_rgba(20,20,16,0.06)]">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">Resource</p>
+        <h1 className="mt-2 text-3xl font-semibold text-[var(--text-main)]">{book.title}</h1>
+        <p className="mt-2 max-w-prose text-base text-[var(--text-soft)]">{book.description || "Sin descripcion"}</p>
         {continueChapter ? (
-          <Link href={`/books/${book.slug}/chapters/${continueChapter.slug}`} className="mt-2 inline-flex rounded-full bg-[#111111] px-4 py-2 text-sm font-medium text-white transition hover:bg-black">
+          <Link
+            href={`/books/${book.slug}/chapters/${continueChapter.slug}`}
+            className="mt-2 inline-flex h-11 items-center rounded-full bg-[var(--text-main)] px-4 text-base font-semibold text-[var(--paper)] transition hover:opacity-90"
+          >
             Continuar en: {continueChapter.title}
           </Link>
         ) : null}
       </header>
 
-      <div className="rounded-3xl border border-[#d8d8d2] bg-white shadow-[0_10px_24px_rgba(20,20,16,0.06)]">
-        <ul className="divide-y divide-[#e5e5df]">
+      <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] shadow-[0_10px_24px_rgba(20,20,16,0.06)]">
+        <ul className="divide-y divide-[var(--line)]">
           {visibleChapters.map((chapter) => {
             const progress = progressMap.get(chapter.id);
             const isCompleted = progress?.isCompleted ?? false;
@@ -76,18 +79,18 @@ export default async function BookPage({ params }: BookPageProps) {
             return (
               <li key={chapter.id} className="flex items-center justify-between gap-3 p-4">
                 <div>
-                  <p className="text-sm font-medium text-[#171717]">
+                  <p className="text-lg font-semibold text-[var(--text-main)]">
                     {chapter.orderIndex}. {chapter.title}
                   </p>
-                  <div className="mt-1 flex items-center gap-2 text-xs text-[#777770]">
+                  <div className="mt-1 flex items-center gap-2 text-sm text-[var(--text-muted)]">
                     <span>{chapter.estimatedReadingMinutes ?? 1} min</span>
                     <span>•</span>
-                    <span className={isCompleted ? "text-[#2d6a1f]" : isInProgress ? "text-[#5d7f36]" : ""}>{label}</span>
+                    <span className={isCompleted ? "text-[var(--success)]" : isInProgress ? "text-[var(--accent-dark)]" : ""}>{label}</span>
                   </div>
                 </div>
                 <Link
                   href={`/books/${book.slug}/chapters/${chapter.slug}`}
-                  className="rounded-full border border-[#d8d8d2] bg-white px-3 py-2 text-xs font-medium text-[#171717] transition hover:bg-[#f7f7f4]"
+                  className="inline-flex h-10 items-center rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 text-sm font-semibold text-[var(--text-main)] transition hover:bg-[var(--paper-soft)]"
                 >
                   {isCompleted ? "Releer" : isInProgress ? "Continuar" : "Leer"}
                 </Link>

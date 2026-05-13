@@ -80,6 +80,7 @@ export default function RootLayout({
       className={`h-full antialiased ${fontUi.variable} ${fontReaderPrimary.variable} ${fontReaderAlt.variable} ${fontReaderMerriweather.variable} ${fontReaderNotoSerif.variable} ${fontReaderIbmPlexSerif.variable} ${fontReaderIbmPlexSans.variable} ${fontReaderHeading.variable}`}
       data-reader-theme="clean-paper"
       data-reader-columns="spread"
+      data-reader-code-mode="notebook"
     >
       <body className="min-h-full flex flex-col">
         <ReaderPreferencesSync />

@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createClient } from "@/lib/supabase/server";
+import { normalizeNotebookMarkdown } from "@/lib/content/normalize-notebook-markdown";
 
 export interface ChapterDetail {
   id: string;
@@ -46,7 +47,8 @@ export async function getChapterBySlugs(
   const next = currentIndex < list.length - 1 ? list[currentIndex + 1] : null;
 
   const absolutePath = path.join(process.cwd(), chapter.file_path);
-  const markdown = await fs.readFile(absolutePath, "utf8");
+  const markdownRaw = await fs.readFile(absolutePath, "utf8");
+  const markdown = normalizeNotebookMarkdown(markdownRaw);
 
   return {
     id: chapter.id,

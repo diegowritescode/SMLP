@@ -509,6 +509,52 @@ body {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
+.reader-content .reader-code-collapsible {
+  margin: 1.9em 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--paper-soft) 12%);
+  overflow: hidden;
+}
+
+.reader-content .reader-code-collapsible > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 620;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.reader-content .reader-code-collapsible > summary::-webkit-details-marker {
+  display: none;
+}
+
+.reader-content .reader-code-collapsible-hint {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.reader-content .reader-code-collapsible[open] > summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.reader-content .reader-code-collapsible:not([open]) > summary {
+  border-bottom: 0;
+}
+
+.reader-content .reader-code-collapsible > pre {
+  margin: 0;
+  border-radius: 0;
+}
+
 .reader-content code:not(pre code) {
   padding: 0.17em 0.35em;
   border-radius: 7px;

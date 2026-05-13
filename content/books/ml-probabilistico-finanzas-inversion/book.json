@@ -1,0 +1,214 @@
+{
+  "title": "ML Probabilistico para Finanzas e Inversion",
+  "slug": "ml-probabilistico-finanzas-inversion",
+  "description": "Compilacion de notebooks del libro Probabilistic Machine Learning for Finance and Investing en formato Markdown.",
+  "category": "Machine Learning",
+  "language": "es",
+  "coverImage": "/library/ml-probabilistico-cover.jpg",
+  "isPublished": true,
+  "chapters": [
+    {
+      "title": "ML Probabilístico para Finanzas e Inversión",
+      "slug": "index",
+      "file": "index.md",
+      "order": 1,
+      "isPublished": true
+    },
+    {
+      "title": "Notebook: Chapter 1 — Forward & Inverse Inference",
+      "slug": "notebook-ch01-forward-inverse",
+      "file": "notebook_ch01_forward_inverse.md",
+      "order": 2,
+      "isPublished": true
+    },
+    {
+      "title": "Trifecta de Errores en Modelos Financieros",
+      "slug": "notebook-ch01-trifecta-errors",
+      "file": "notebook_ch01_trifecta_errors.md",
+      "order": 3,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 2: Casos de Estudio Históricos - LTCM y Renaissance",
+      "slug": "notebook-ch02-ltcm-analysis",
+      "file": "notebook_ch02_ltcm_analysis.md",
+      "order": 4,
+      "isPublished": true
+    },
+    {
+      "title": "Analisis de Incertidumbre: Del Problema de Monty Hall a los Mercados",
+      "slug": "notebook-ch02-monty-hall-uncertainty",
+      "file": "notebook_ch02_monty_hall_uncertainty.md",
+      "order": 5,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 2B: Probabilidades Relativas y Critica a Riesgo vs Incertidumbre",
+      "slug": "notebook-ch02-relative-probability",
+      "file": "notebook_ch02_relative_probability.md",
+      "order": 6,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 2C: Black-Scholes y la Trinidad de la Incertidumbre",
+      "slug": "notebook-ch02c-bsm-uncertainty-trinity",
+      "file": "notebook_ch02c_bsm_uncertainty_trinity.md",
+      "order": 7,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 2D: Bias-Variance Tradeoff y Teoremas No Free Lunch",
+      "slug": "notebook-ch02d-bias-variance-nfl",
+      "file": "notebook_ch02d_bias_variance_nfl.md",
+      "order": 8,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 2E: El Problema de la Induccion en Finanzas",
+      "slug": "notebook-ch02e-induction-problem",
+      "file": "notebook_ch02e_induction_problem.md",
+      "order": 9,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 3: Inferencia Bayesiana y MCMC",
+      "slug": "notebook-ch03-bayesian-inference",
+      "file": "notebook_ch03_bayesian_inference.md",
+      "order": 10,
+      "isPublished": true
+    },
+    {
+      "title": "Simulacion Monte Carlo para Finanzas",
+      "slug": "notebook-ch03-monte-carlo-finance",
+      "file": "notebook_ch03_monte_carlo_finance.md",
+      "order": 11,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 3B: Conceptos Estadisticos y Critica a la Volatilidad",
+      "slug": "notebook-ch03b-stat-concepts",
+      "file": "notebook_ch03b_stat_concepts.md",
+      "order": 12,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 3C: Normal vs Realidad en Retornos Financieros",
+      "slug": "notebook-ch03c-normal-vs-reality",
+      "file": "notebook_ch03c_normal_vs_reality.md",
+      "order": 13,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 3D: LGN, TLC y los Fundamentos de Monte Carlo",
+      "slug": "notebook-ch03d-lln-clt-mcs",
+      "file": "notebook_ch03d_lln_clt_mcs.md",
+      "order": 14,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 4: Simulación Monte Carlo",
+      "slug": "notebook-ch04-monte-carlo",
+      "file": "notebook_ch04_monte_carlo.md",
+      "order": 15,
+      "isPublished": true
+    },
+    {
+      "title": "Peligros de NHST, p-values e Intervalos de Confianza",
+      "slug": "notebook-ch04-nhst-dangers",
+      "file": "notebook_ch04_nhst_dangers.md",
+      "order": 16,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 4B: NHST Aplicado -- OLS, Base Rates e Indicadores Economicos",
+      "slug": "notebook-ch04b-nhst-applied",
+      "file": "notebook_ch04b_nhst_applied.md",
+      "order": 17,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 4C: Intervalos de Confianza, CAPM y la Trampa de Alpha",
+      "slug": "notebook-ch04c-ci-capm-alpha",
+      "file": "notebook_ch04c_ci_capm_alpha.md",
+      "order": 18,
+      "isPublished": true
+    },
+    {
+      "title": "Marco de ML Probabilistico: Inferencia y Prediccion",
+      "slug": "notebook-ch05-pml-framework",
+      "file": "notebook_ch05_pml_framework.md",
+      "order": 19,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 5: Modelos de Volatilidad Estocástica",
+      "slug": "notebook-ch05-volatility-models",
+      "file": "notebook_ch05_volatility_models.md",
+      "order": 20,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 5B: Inferencia Bayesiana para Default de Bonos High-Yield",
+      "slug": "notebook-ch05b-hy-default",
+      "file": "notebook_ch05b_hy_default.md",
+      "order": 21,
+      "isPublished": true
+    },
+    {
+      "title": "MLE vs Modelos Probabilisticos: Expectativas de Ganancias",
+      "slug": "notebook-ch06-mle-vs-probabilistic",
+      "file": "notebook_ch06_mle_vs_probabilistic.md",
+      "order": 22,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 6: Riesgos de Cola y Eventos Extremos",
+      "slug": "notebook-ch06-tail-risks",
+      "file": "notebook_ch06_tail_risks.md",
+      "order": 23,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 6B: MLE Falla con Pocos Datos -- El Caso ZYX",
+      "slug": "notebook-ch06b-zyx-mle-failure",
+      "file": "notebook_ch06b_zyx_mle_failure.md",
+      "order": 24,
+      "isPublished": true
+    },
+    {
+      "title": "Modulo 6C: Grid Approximation, Markov Chains y MCMC Metropolis",
+      "slug": "notebook-ch06c-grid-mcmc",
+      "file": "notebook_ch06c_grid_mcmc.md",
+      "order": 25,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 7: Machine Learning en Finanzas",
+      "slug": "notebook-ch07-ml-finance",
+      "file": "notebook_ch07_ml_finance.md",
+      "order": 26,
+      "isPublished": true
+    },
+    {
+      "title": "Ensambles Generativos con PyMC y ArviZ",
+      "slug": "notebook-ch07-pymc-ensembles",
+      "file": "notebook_ch07_pymc_ensembles.md",
+      "order": 27,
+      "isPublished": true
+    },
+    {
+      "title": "Notebook — Decisiones Probabilísticas: Kelly, VaR y Gestión de Capital",
+      "slug": "notebook-ch08-kelly-capital-allocation",
+      "file": "notebook_ch08_kelly_capital_allocation.md",
+      "order": 28,
+      "isPublished": true
+    },
+    {
+      "title": "Capítulo 8: Stress Testing y Regulación",
+      "slug": "notebook-ch08-stress-testing",
+      "file": "notebook_ch08_stress_testing.md",
+      "order": 29,
+      "isPublished": true
+    }
+  ]
+}

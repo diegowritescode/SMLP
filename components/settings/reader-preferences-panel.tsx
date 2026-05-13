@@ -8,6 +8,7 @@ import {
   resetReaderPreferences,
   saveReaderPreferences,
   type ReaderColumnsMode,
+  type ReaderCodeMode,
   type ReaderFontFamily,
   type ReaderPreferences,
   type ReaderTheme,
@@ -78,6 +79,11 @@ const lineHeightOptions = [
 const columnsOptions: Array<{ value: ReaderColumnsMode; label: string }> = [
   { value: "spread", label: "Doble columna" },
   { value: "single", label: "Columna única" },
+];
+
+const codeModeOptions: Array<{ value: ReaderCodeMode; label: string; description: string }> = [
+  { value: "notebook", label: "Notebook", description: "Muestra todo el codigo expandido." },
+  { value: "read", label: "Read", description: "Colapsa codigo y prioriza lectura conceptual." },
 ];
 
 export function ReaderPreferencesPanel() {
@@ -193,6 +199,27 @@ export function ReaderPreferencesPanel() {
               </button>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="mt-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">Modo de codigo</p>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {codeModeOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setPrefs((prev) => ({ ...prev, codeMode: option.value }))}
+              className={`rounded-xl border p-3 text-left transition ${
+                prefs.codeMode === option.value
+                  ? "border-[var(--text-main)] bg-[var(--paper-soft)]"
+                  : "border-[var(--line)] bg-[var(--surface)] hover:bg-[var(--paper-soft)]"
+              }`}
+            >
+              <p className="text-base font-semibold text-[var(--text-main)]">{option.label}</p>
+              <p className="mt-1 text-sm text-[var(--text-soft)]">{option.description}</p>
+            </button>
+          ))}
         </div>
       </section>
 

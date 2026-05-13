@@ -1,4 +1,4 @@
-import { slugify } from "@/lib/utils/slugify";
+import { getNextHeadingId } from "@/lib/content/heading-ids";
 
 export interface MarkdownHeading {
   level: 1 | 2 | 3;
@@ -7,6 +7,8 @@ export interface MarkdownHeading {
 }
 
 export function extractHeadings(markdown: string): MarkdownHeading[] {
+  const seen = new Map<string, number>();
+
   return markdown
     .split("\n")
     .map((line) => line.match(/^(#{1,3})\s+(.*)$/))
@@ -18,7 +20,7 @@ export function extractHeadings(markdown: string): MarkdownHeading[] {
       return {
         level,
         text,
-        id: slugify(text),
+        id: getNextHeadingId(text, seen),
       };
     })
     .filter((entry) => entry.text.length > 0);

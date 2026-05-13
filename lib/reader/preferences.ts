@@ -8,6 +8,7 @@ export type ReaderFontFamily =
   | "inter"
   | "ibm-plex-sans";
 export type ReaderColumnsMode = "spread" | "single";
+export type ReaderCodeMode = "notebook" | "read";
 
 export interface ReaderPreferences {
   theme: ReaderTheme;
@@ -15,6 +16,7 @@ export interface ReaderPreferences {
   fontSize: string;
   lineHeight: string;
   columns: ReaderColumnsMode;
+  codeMode: ReaderCodeMode;
 }
 
 export const READER_PREFERENCES_KEY = "reader-preferences-v1";
@@ -26,6 +28,7 @@ export const defaultReaderPreferences: ReaderPreferences = {
   fontSize: "1.1rem",
   lineHeight: "1.72",
   columns: "spread",
+  codeMode: "notebook",
 };
 
 const allowedThemes = new Set<ReaderTheme>(["clean-paper", "warm-sepia", "sage-green", "graphite-night", "focus-ink", "github-slate"]);
@@ -39,6 +42,7 @@ const allowedFonts = new Set<ReaderFontFamily>([
   "ibm-plex-sans",
 ]);
 const allowedColumns = new Set<ReaderColumnsMode>(["spread", "single"]);
+const allowedCodeModes = new Set<ReaderCodeMode>(["notebook", "read"]);
 const allowedFontSizes = new Set(["1.02rem", "1.1rem", "1.18rem", "1.26rem"]);
 const allowedLineHeights = new Set(["1.65", "1.72", "1.8"]);
 
@@ -70,6 +74,9 @@ export function normalizeReaderPreferences(input: Partial<ReaderPreferences> | n
     columns: allowedColumns.has(source.columns as ReaderColumnsMode)
       ? (source.columns as ReaderColumnsMode)
       : defaultReaderPreferences.columns,
+    codeMode: allowedCodeModes.has(source.codeMode as ReaderCodeMode)
+      ? (source.codeMode as ReaderCodeMode)
+      : defaultReaderPreferences.codeMode,
   };
 }
 
@@ -106,6 +113,7 @@ export function applyReaderPreferences(preferences: ReaderPreferences) {
 
   root.dataset.readerTheme = preferences.theme;
   root.dataset.readerColumns = preferences.columns;
+  root.dataset.readerCodeMode = preferences.codeMode;
   root.style.setProperty("--reader-font-size", preferences.fontSize);
   root.style.setProperty("--reader-line-height", preferences.lineHeight);
   root.style.setProperty("--reader-font-family", fontFamilyValue(preferences.fontFamily));

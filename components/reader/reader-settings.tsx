@@ -8,6 +8,7 @@ import {
   loadReaderPreferences,
   saveReaderPreferences,
   type ReaderColumnsMode,
+  type ReaderCodeMode,
   type ReaderFontFamily,
   type ReaderPreferences,
   type ReaderTheme,
@@ -48,6 +49,11 @@ const lineHeightOptions = [
 const columnOptions: Array<{ label: string; value: ReaderColumnsMode }> = [
   { label: "2 columnas", value: "spread" },
   { label: "1 columna", value: "single" },
+];
+
+const codeModeOptions: Array<{ label: string; value: ReaderCodeMode; hint: string }> = [
+  { label: "Notebook", value: "notebook", hint: "Codigo completo visible" },
+  { label: "Read", value: "read", hint: "Codigo colapsado por bloque" },
 ];
 
 export function ReaderSettings() {
@@ -179,6 +185,29 @@ export function ReaderSettings() {
                   className={isActivePill(prefs.columns === option.value)}
                 >
                   {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-4 space-y-2">
+            <p className="text-sm font-medium text-[var(--text-soft)]">Modo de codigo</p>
+            <div className="grid grid-cols-2 gap-2">
+              {codeModeOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setPrefs((prev) => ({ ...prev, codeMode: option.value }))}
+                  className={`rounded-xl border px-3 py-2 text-left text-sm transition ${
+                    prefs.codeMode === option.value
+                      ? "border-[var(--text-main)] bg-[var(--text-main)] text-[var(--paper)]"
+                      : "border-[var(--line)] bg-[var(--surface)] text-[var(--text-soft)] hover:bg-[var(--paper-soft)] hover:text-[var(--text-main)]"
+                  }`}
+                >
+                  <span className="block font-semibold">{option.label}</span>
+                  <span className={`mt-0.5 block text-xs ${prefs.codeMode === option.value ? "text-[var(--paper-soft)]" : "text-[var(--muted)]"}`}>
+                    {option.hint}
+                  </span>
                 </button>
               ))}
             </div>

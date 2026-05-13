@@ -40,8 +40,8 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
         <aside className="floating-panel absolute right-0 top-[calc(100%+10px)] z-50 max-h-[340px] w-[300px] overflow-auto p-4">
           <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">Contenido</p>
           <ul className="space-y-2 text-sm">
-            {headings.map((heading) => (
-              <li key={`${heading.id}-${heading.level}`} className={heading.level === 1 ? "pl-0" : heading.level === 2 ? "pl-3" : "pl-6"}>
+            {headings.map((heading, index) => (
+              <li key={`${heading.id}-${heading.level}-${index}`} className={heading.level === 1 ? "pl-0" : heading.level === 2 ? "pl-3" : "pl-6"}>
                 <a
                   href={`#${heading.id}`}
                   onClick={() => setOpen(false)}

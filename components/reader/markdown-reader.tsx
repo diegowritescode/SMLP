@@ -1,7 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
-import { slugify } from "@/lib/utils/slugify";
+import { getNextHeadingId } from "@/lib/content/heading-ids";
+import { CollapsibleCodeBlock } from "@/components/reader/collapsible-code-block";
 
 interface MarkdownReaderProps {
   markdown: string;
@@ -46,6 +47,9 @@ function isStandaloneImageParagraph(node: unknown): boolean {
 }
 
 export function MarkdownReader({ markdown, containerId = "reader-content", className = "" }: MarkdownReaderProps) {
+  const seenHeadingIds = new Map<string, number>();
+  const resolveHeadingId = (node: unknown) => getNextHeadingId(textFromNode(node), seenHeadingIds);
+
   return (
     <div id={containerId} className={`reader-content reader-column ${className}`.trim()}>
       <ReactMarkdown
@@ -53,7 +57,7 @@ export function MarkdownReader({ markdown, containerId = "reader-content", class
         rehypePlugins={[rehypeSanitize]}
         components={{
           h1: ({ node, children, ...props }) => {
-            const id = slugify(textFromNode(node));
+            const id = resolveHeadingId(node);
             return (
               <h1 id={id} {...props}>
                 {children}
@@ -61,7 +65,7 @@ export function MarkdownReader({ markdown, containerId = "reader-content", class
             );
           },
           h2: ({ node, children, ...props }) => {
-            const id = slugify(textFromNode(node));
+            const id = resolveHeadingId(node);
             return (
               <h2 id={id} {...props}>
                 {children}
@@ -69,7 +73,7 @@ export function MarkdownReader({ markdown, containerId = "reader-content", class
             );
           },
           h3: ({ node, children, ...props }) => {
-            const id = slugify(textFromNode(node));
+            const id = resolveHeadingId(node);
             return (
               <h3 id={id} {...props}>
                 {children}
@@ -98,6 +102,7 @@ export function MarkdownReader({ markdown, containerId = "reader-content", class
               <table>{children}</table>
             </div>
           ),
+          pre: ({ children }) => <CollapsibleCodeBlock>{children}</CollapsibleCodeBlock>,
           th: ({ node, children, className, ...props }) => {
             const numeric = isNumericLike(textFromNode(node));
             return (
