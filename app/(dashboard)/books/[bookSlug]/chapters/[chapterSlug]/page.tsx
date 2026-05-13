@@ -126,11 +126,11 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
         <div className="floating-control pointer-events-auto flex items-center justify-between gap-2 px-3">
           <div className="flex min-w-0 items-center gap-2">
             <Link href={`/books/${chapter.bookSlug}`} className="icon-button-soft" aria-label="Back to book">
-              <ChevronLeftIcon className="size-4" />
+              <ChevronLeftIcon className="size-5" />
             </Link>
             <div className="hidden min-w-0 sm:block">
-              <p className="truncate text-xs text-[var(--text-soft)]">{chapter.bookTitle}</p>
-              <p className="truncate text-[11px] text-[var(--text-muted)]">{chapter.chapterTitle}</p>
+              <p className="truncate text-sm font-medium text-[var(--text-main)]">{chapter.bookTitle}</p>
+              <p className="truncate text-xs text-[var(--text-soft)]">{chapter.chapterTitle}</p>
             </div>
           </div>
 
@@ -159,15 +159,15 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
           {chapter.previousChapterSlug ? (
             <Link
               href={`/books/${chapter.bookSlug}/chapters/${chapter.previousChapterSlug}`}
-              className="inline-flex h-9 items-center gap-1 rounded-full border border-[var(--line)] bg-white/80 px-3 text-xs text-[var(--text-soft)]"
+              className="reader-dock-chip inline-flex h-10 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition hover:bg-[var(--paper-soft)] hover:text-[var(--text-main)]"
             >
-              <ChevronLeftIcon className="size-3.5" />
+              <ChevronLeftIcon className="size-4.5" />
               <span className="hidden sm:inline">Anterior</span>
             </Link>
           ) : null}
         </div>
 
-        <div className="hidden min-w-[140px] items-center justify-center rounded-full border border-[var(--line)] bg-white/76 px-3 py-1 text-center text-[11px] text-[var(--text-soft)] md:inline-flex">
+        <div className="reader-dock-chip hidden min-w-[156px] items-center justify-center rounded-full px-3.5 py-1.5 text-center text-sm font-medium md:inline-flex">
           {isCompleted ? "100% completado" : "Lectura en curso"}
         </div>
 
@@ -177,15 +177,15 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
             <input type="hidden" name="chapterSlug" value={chapter.chapterSlug} />
             <input type="hidden" name="bookId" value={chapter.bookId} />
             <input type="hidden" name="chapterId" value={chapter.id} />
-            <button type="submit" className="inline-flex h-9 items-center gap-1 rounded-full bg-[var(--accent)] px-3 text-xs font-medium text-zinc-900">
-              <CheckIcon className="size-3.5" />
+            <button type="submit" className="inline-flex h-10 items-center gap-1.5 rounded-full bg-[#111111] px-3.5 text-sm font-semibold text-white transition hover:bg-black">
+              <CheckIcon className="size-4.5" />
               <span className="hidden sm:inline">Marcar completado</span>
               <span className="sm:hidden">Completar</span>
             </button>
           </form>
         ) : (
-          <span className="inline-flex h-9 items-center gap-1 rounded-full bg-white/75 px-3 text-xs text-[var(--success)]">
-            <CheckIcon className="size-3.5" />
+          <span className="reader-dock-chip inline-flex h-10 items-center gap-1.5 rounded-full px-3.5 text-sm font-semibold text-[var(--success)]">
+            <CheckIcon className="size-4.5" />
             Completado
           </span>
         )}
@@ -198,19 +198,19 @@ export default async function ChapterPage({ params, searchParams }: ChapterPageP
               <input type="hidden" name="nextChapterSlug" value={chapter.nextChapterSlug} />
               <input type="hidden" name="bookId" value={chapter.bookId} />
               <input type="hidden" name="chapterId" value={chapter.id} />
-              <button type="submit" className="inline-flex h-9 items-center gap-1 rounded-full bg-[var(--text-main)] px-3 text-xs text-[var(--paper)]">
+              <button type="submit" className="inline-flex h-10 items-center gap-1.5 rounded-full bg-[#111111] px-3.5 text-sm font-semibold text-white transition hover:bg-black">
                 <span className="hidden sm:inline">Siguiente</span>
                 <span className="sm:hidden">Next</span>
-                <ChevronRightIcon className="size-3.5" />
+                <ChevronRightIcon className="size-4.5" />
               </button>
             </form>
           ) : (
             <Link
               href={`/books/${chapter.bookSlug}`}
-              className="inline-flex h-9 items-center gap-1 rounded-full bg-[var(--text-main)] px-3 text-xs text-[var(--paper)]"
+              className="inline-flex h-10 items-center gap-1.5 rounded-full bg-[#111111] px-3.5 text-sm font-semibold text-white transition hover:bg-black"
             >
               Terminar libro
-              <ChevronRightIcon className="size-3.5" />
+              <ChevronRightIcon className="size-4.5" />
             </Link>
           )}
         </div>

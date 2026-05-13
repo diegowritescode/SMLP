@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FilterIcon, SearchIcon } from "@/components/ui/icons";
+import { FilterIcon } from "@/components/ui/icons";
 
 interface LibraryFiltersProps {
   categories: string[];
@@ -8,6 +8,7 @@ interface LibraryFiltersProps {
   selectedLanguage: string;
   selectedStatus: string;
   selectedQuery: string;
+  resourcesCount: number;
 }
 
 export function LibraryFilters({
@@ -17,56 +18,70 @@ export function LibraryFilters({
   selectedLanguage,
   selectedStatus,
   selectedQuery,
+  resourcesCount,
 }: LibraryFiltersProps) {
+  if (resourcesCount <= 1) return null;
+
   return (
-    <form
-      method="get"
-      className="grid grid-cols-1 gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface-elevated)]/84 p-4 backdrop-blur-xl lg:grid-cols-[1.2fr_repeat(3,minmax(0,1fr))_auto]"
-    >
-      <label className="relative block">
-        <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--text-muted)]" />
-        <input
-          name="q"
-          defaultValue={selectedQuery}
-          placeholder="Search resources, topics, notebooks..."
-          className="h-10 w-full rounded-full border border-[var(--line)] bg-white/85 pl-10 pr-4 text-sm text-[var(--text-main)] outline-none ring-0 placeholder:text-[var(--text-muted)]"
-        />
-      </label>
+    <details className="group rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-3 shadow-[0_8px_20px_rgba(20,20,16,0.06)]">
+      <summary className="flex cursor-pointer list-none items-center gap-2 text-base font-semibold text-[var(--text-main)]">
+        <span className="inline-flex size-9 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--paper-soft)]">
+          <FilterIcon className="size-4.5" />
+        </span>
+        Filters
+        <span className="ml-auto text-sm text-[var(--text-muted)] group-open:hidden">Show</span>
+        <span className="ml-auto hidden text-sm text-[var(--text-muted)] group-open:inline">Hide</span>
+      </summary>
 
-      <select name="category" defaultValue={selectedCategory} className="h-10 rounded-full border border-[var(--line)] bg-white/85 px-3 text-sm text-[var(--text-soft)]">
-        <option value="">Collections</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+      <form method="get" className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[repeat(3,minmax(0,1fr))_auto]">
+        {selectedQuery ? <input type="hidden" name="q" value={selectedQuery} /> : null}
 
-      <select name="language" defaultValue={selectedLanguage} className="h-10 rounded-full border border-[var(--line)] bg-white/85 px-3 text-sm text-[var(--text-soft)]">
-        <option value="">Languages</option>
-        {languages.map((language) => (
-          <option key={language} value={language}>
-            {language.toUpperCase()}
-          </option>
-        ))}
-      </select>
+        <select
+          name="category"
+          defaultValue={selectedCategory}
+          className="h-11 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 text-base font-medium text-[var(--text-main)] outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
+        >
+          <option value="">All collections</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
 
-      <select name="status" defaultValue={selectedStatus} className="h-10 rounded-full border border-[var(--line)] bg-white/85 px-3 text-sm text-[var(--text-soft)]">
-        <option value="">Study State</option>
-        <option value="not_started">Not started</option>
-        <option value="in_progress">In progress</option>
-        <option value="completed">Completed</option>
-      </select>
+        <select
+          name="language"
+          defaultValue={selectedLanguage}
+          className="h-11 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 text-base font-medium text-[var(--text-main)] outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
+        >
+          <option value="">All languages</option>
+          {languages.map((language) => (
+            <option key={language} value={language}>
+              {language.toUpperCase()}
+            </option>
+          ))}
+        </select>
 
-      <div className="flex items-center gap-2">
-        <button type="submit" className="inline-flex h-10 items-center gap-2 rounded-full bg-[var(--accent)] px-4 text-sm font-medium text-zinc-900">
-          <FilterIcon className="size-4" />
-          Apply
-        </button>
-        <Link href="/library" className="inline-flex h-10 items-center rounded-full border border-[var(--line)] px-4 text-sm text-[var(--text-soft)]">
-          Clear
-        </Link>
-      </div>
-    </form>
+        <select
+          name="status"
+          defaultValue={selectedStatus}
+          className="h-11 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 text-base font-medium text-[var(--text-main)] outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
+        >
+          <option value="">Any progress</option>
+          <option value="not_started">Not started</option>
+          <option value="in_progress">In progress</option>
+          <option value="completed">Completed</option>
+        </select>
+
+        <div className="flex items-center gap-2">
+          <button type="submit" className="inline-flex h-11 items-center rounded-full bg-[var(--text-main)] px-4 text-base font-semibold text-[var(--paper)]">
+            Apply
+          </button>
+          <Link href="/library" className="inline-flex h-11 items-center rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 text-base font-medium text-[var(--text-soft)]">
+            Clear
+          </Link>
+        </div>
+      </form>
+    </details>
   );
 }

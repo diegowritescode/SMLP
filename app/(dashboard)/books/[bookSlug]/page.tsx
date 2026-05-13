@@ -53,19 +53,20 @@ export default async function BookPage({ params }: BookPageProps) {
   const continueChapter = firstInProgress ?? firstUnread ?? visibleChapters[0];
 
   return (
-    <section className="space-y-6">
-      <header className="space-y-3">
-        <h1 className="text-3xl font-semibold text-[var(--text-main)]">{book.title}</h1>
-        <p className="max-w-prose text-sm text-[var(--text-soft)]">{book.description || "Sin descripcion"}</p>
+    <section className="space-y-6 pb-8">
+      <header className="rounded-3xl border border-[#d8d8d2] bg-white p-5 shadow-[0_12px_30px_rgba(20,20,16,0.06)]">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-[#808078]">Resource</p>
+        <h1 className="mt-2 text-3xl font-semibold text-[#151515]">{book.title}</h1>
+        <p className="mt-2 max-w-prose text-sm text-[#66665f]">{book.description || "Sin descripcion"}</p>
         {continueChapter ? (
-          <Link href={`/books/${book.slug}/chapters/${continueChapter.slug}`} className="inline-flex rounded-full bg-[var(--text-main)] px-4 py-2 text-sm font-medium text-[var(--paper)]">
+          <Link href={`/books/${book.slug}/chapters/${continueChapter.slug}`} className="mt-2 inline-flex rounded-full bg-[#111111] px-4 py-2 text-sm font-medium text-white transition hover:bg-black">
             Continuar en: {continueChapter.title}
           </Link>
         ) : null}
       </header>
 
-      <div className="rounded-3xl border border-[var(--line)] bg-[var(--app-surface)]/90">
-        <ul className="divide-y divide-[var(--line)]">
+      <div className="rounded-3xl border border-[#d8d8d2] bg-white shadow-[0_10px_24px_rgba(20,20,16,0.06)]">
+        <ul className="divide-y divide-[#e5e5df]">
           {visibleChapters.map((chapter) => {
             const progress = progressMap.get(chapter.id);
             const isCompleted = progress?.isCompleted ?? false;
@@ -75,18 +76,18 @@ export default async function BookPage({ params }: BookPageProps) {
             return (
               <li key={chapter.id} className="flex items-center justify-between gap-3 p-4">
                 <div>
-                  <p className="text-sm font-medium text-[var(--text-main)]">
+                  <p className="text-sm font-medium text-[#171717]">
                     {chapter.orderIndex}. {chapter.title}
                   </p>
-                  <div className="mt-1 flex items-center gap-2 text-xs text-[var(--text-muted)]">
+                  <div className="mt-1 flex items-center gap-2 text-xs text-[#777770]">
                     <span>{chapter.estimatedReadingMinutes ?? 1} min</span>
                     <span>•</span>
-                    <span className={isCompleted ? "text-[var(--success)]" : isInProgress ? "text-[var(--accent-dark)]" : ""}>{label}</span>
+                    <span className={isCompleted ? "text-[#2d6a1f]" : isInProgress ? "text-[#5d7f36]" : ""}>{label}</span>
                   </div>
                 </div>
                 <Link
                   href={`/books/${book.slug}/chapters/${chapter.slug}`}
-                  className="rounded-full border border-[var(--line)] bg-white/85 px-3 py-2 text-xs font-medium text-[var(--text-main)]"
+                  className="rounded-full border border-[#d8d8d2] bg-white px-3 py-2 text-xs font-medium text-[#171717] transition hover:bg-[#f7f7f4]"
                 >
                   {isCompleted ? "Releer" : isInProgress ? "Continuar" : "Leer"}
                 </Link>

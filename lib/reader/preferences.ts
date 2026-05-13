@@ -1,4 +1,4 @@
-export type ReaderTheme = "clean-paper" | "warm-sepia" | "sage-green" | "graphite-night" | "focus-ink";
+export type ReaderTheme = "clean-paper" | "warm-sepia" | "sage-green" | "graphite-night" | "focus-ink" | "github-slate";
 export type ReaderFontFamily =
   | "source-serif"
   | "lora"
@@ -28,7 +28,7 @@ export const defaultReaderPreferences: ReaderPreferences = {
   columns: "spread",
 };
 
-const allowedThemes = new Set<ReaderTheme>(["clean-paper", "warm-sepia", "sage-green", "graphite-night", "focus-ink"]);
+const allowedThemes = new Set<ReaderTheme>(["clean-paper", "warm-sepia", "sage-green", "graphite-night", "focus-ink", "github-slate"]);
 const allowedFonts = new Set<ReaderFontFamily>([
   "source-serif",
   "lora",

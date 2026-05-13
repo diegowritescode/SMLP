@@ -18,7 +18,7 @@ export function DashboardHeader({ userEmail }: DashboardHeaderProps) {
 
   return (
     <header className="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <div className="floating-control flex h-11 min-w-0 items-center gap-2 px-4 text-xs text-[var(--text-soft)]">
+      <div className="floating-control flex h-12 min-w-0 items-center gap-2 border-[var(--line)] bg-[var(--surface)] px-4 text-sm font-medium text-[var(--text-soft)]">
         <span className="hidden sm:inline">Private Library</span>
         <span className="sm:hidden">Library</span>
         <span>•</span>
@@ -27,14 +27,14 @@ export function DashboardHeader({ userEmail }: DashboardHeaderProps) {
 
       <div className="flex items-center gap-2">
         <Link href="/library" className="icon-button-soft" aria-label="Library">
-          <LibraryIcon className="size-4" />
+          <LibraryIcon className="size-5" />
         </Link>
         <Link href="/progress" className="icon-button-soft" aria-label="Progress">
-          <ProgressIcon className="size-4" />
+          <ProgressIcon className="size-5" />
         </Link>
         <form action={signOutAction}>
-          <button className="floating-control inline-flex h-11 items-center gap-2 px-4 text-sm text-[var(--text-soft)]" type="submit">
-            <LogoutIcon className="size-4" />
+          <button className="floating-control inline-flex h-12 items-center gap-2 border-[var(--line)] bg-[var(--surface)] px-4 text-base font-medium text-[var(--text-soft)]" type="submit">
+            <LogoutIcon className="size-5" />
             Logout
           </button>
         </form>

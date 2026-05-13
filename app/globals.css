@@ -59,6 +59,13 @@
   --accent: #aacd69;
   --accent-soft: rgba(151, 186, 94, 0.24);
   --accent-dark: #d2e7a4;
+  --nav-item-active-bg: color-mix(in srgb, var(--paper-soft) 76%, transparent);
+  --nav-item-active-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  --nav-icon-bg: color-mix(in srgb, var(--paper-soft) 72%, transparent);
+  --nav-icon-bg-active: color-mix(in srgb, var(--paper) 88%, transparent);
+  --nav-icon-color: #d7e0ea;
+  --nav-icon-color-active: #f3f7fb;
+  --nav-icon-border: rgba(240, 246, 252, 0.24);
 }
 
 :root[data-reader-theme="focus-ink"] {
@@ -76,6 +83,28 @@
   --accent-dark: #3f6f3f;
 }
 
+:root[data-reader-theme="github-slate"] {
+  --bg: #0f1722;
+  --surface: #161f2d;
+  --paper: #1f2937;
+  --paper-soft: #253247;
+  --text-main: #e6edf3;
+  --text-soft: #a9b5c3;
+  --muted: #8191a6;
+  --line: rgba(240, 246, 252, 0.14);
+  --line-strong: rgba(240, 246, 252, 0.22);
+  --accent: #2f81f7;
+  --accent-soft: rgba(47, 129, 247, 0.2);
+  --accent-dark: #9ecbff;
+  --nav-item-active-bg: color-mix(in srgb, var(--paper-soft) 78%, transparent);
+  --nav-item-active-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
+  --nav-icon-bg: color-mix(in srgb, var(--paper-soft) 70%, transparent);
+  --nav-icon-bg-active: color-mix(in srgb, var(--paper) 90%, transparent);
+  --nav-icon-color: #d8e4f0;
+  --nav-icon-color-active: #f0f6fc;
+  --nav-icon-border: rgba(240, 246, 252, 0.24);
+}
+
 :root {
   --bg-outside: var(--bg);
   --app-surface: var(--surface);
@@ -88,6 +117,16 @@
   --shadow-soft: 0 22px 60px rgba(16, 24, 18, 0.1), 0 8px 24px rgba(16, 24, 18, 0.06);
   --shadow-paper: 0 18px 46px rgba(15, 20, 17, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.86);
   --shadow: var(--shadow-soft);
+  --nav-item-active-bg: var(--surface);
+  --nav-item-active-shadow: 0 6px 16px rgba(20, 20, 16, 0.08);
+  --nav-icon-bg: var(--surface);
+  --nav-icon-bg-active: var(--paper-soft);
+  --nav-icon-color: var(--text-soft);
+  --nav-icon-color-active: var(--text-main);
+  --nav-icon-border: var(--line);
+  --reader-dock-chip-bg: var(--surface);
+  --reader-dock-chip-text: var(--text-soft);
+  --reader-dock-chip-border: var(--line);
 
   --font-ui: var(--font-ui-inter), "Inter", "Geist", "Manrope", "Avenir Next", "Segoe UI", sans-serif;
   --font-reader-source: var(--font-reader-source-serif), "Source Serif 4", "Georgia", serif;
@@ -171,28 +210,46 @@ body {
 .sidebar-link {
   display: flex;
   align-items: center;
-  gap: 10px;
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 14px;
+  gap: 12px;
+  border-radius: 999px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 520;
+  letter-spacing: -0.01em;
   color: var(--text-soft);
-  transition: background 160ms ease, transform 160ms ease, color 160ms ease;
+  transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
 }
 
 .sidebar-link:hover,
 .sidebar-link[data-active="true"] {
   color: var(--text-main);
-  transform: translateX(2px);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  background: var(--nav-item-active-bg);
+  box-shadow: var(--nav-item-active-shadow);
+}
+
+.sidebar-icon-chip {
+  background: var(--nav-icon-bg);
+  color: var(--nav-icon-color);
+  border-color: var(--nav-icon-border);
+}
+
+.sidebar-link[data-active="true"] .sidebar-icon-chip {
+  background: var(--nav-icon-bg-active);
+  color: var(--nav-icon-color-active);
+}
+
+.sidebar-link:hover .sidebar-icon-chip {
+  color: var(--nav-icon-color-active);
 }
 
 .mobile-nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  border-radius: 10px;
-  padding: 7px 10px;
-  font-size: 12px;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 520;
   color: var(--text-soft);
   transition: background 160ms ease, color 160ms ease;
 }
@@ -204,25 +261,25 @@ body {
 
 .floating-control {
   border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 76%, transparent);
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
   backdrop-filter: blur(16px);
   border: 1px solid var(--line);
-  box-shadow: 0 8px 22px rgba(24, 28, 20, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  box-shadow: 0 8px 20px rgba(24, 28, 20, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.72);
 }
 
 .floating-panel {
-  border-radius: 20px;
+  border-radius: 18px;
   border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter: blur(22px);
-  box-shadow: 0 20px 40px rgba(18, 24, 20, 0.14);
+  box-shadow: 0 16px 34px rgba(18, 24, 20, 0.12);
 }
 
 .icon-button-soft {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 74%, transparent);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
   border: 1px solid var(--line);
   backdrop-filter: blur(14px);
   display: inline-flex;
@@ -235,7 +292,7 @@ body {
 .icon-button-soft:hover {
   transform: translateY(-1px);
   color: var(--text-main);
-  background: color-mix(in srgb, var(--paper) 95%, transparent);
+  background: color-mix(in srgb, var(--paper) 98%, transparent);
 }
 
 .reader-root {
@@ -255,7 +312,7 @@ body {
 
 .reader-controls-top > .floating-control {
   pointer-events: auto;
-  height: 46px;
+  height: 52px;
   width: min(1020px, calc(100vw - 40px));
 }
 
@@ -466,7 +523,7 @@ body {
   bottom: 14px;
   transform: translateX(-50%);
   width: min(760px, calc(100vw - 30px));
-  min-height: 58px;
+  min-height: 64px;
   border-radius: 18px;
   background: color-mix(in srgb, var(--paper) 80%, transparent);
   backdrop-filter: blur(20px);
@@ -475,19 +532,18 @@ body {
   z-index: 42;
 }
 
+.reader-dock-chip {
+  border: 1px solid var(--reader-dock-chip-border);
+  background: var(--reader-dock-chip-bg);
+  color: var(--reader-dock-chip-text);
+}
+
 .book-card {
   transition: transform 180ms ease, filter 180ms ease;
 }
 
 .book-card:hover {
   transform: translateY(-4px);
-}
-
-.book-cover {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  border-radius: 14px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16), inset -8px 0 16px rgba(0, 0, 0, 0.08);
 }
 
 .reader-theme-swatch {

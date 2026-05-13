@@ -21,17 +21,17 @@ export function MobileNav({ isAdmin }: MobileNavProps) {
   }
 
   return (
-    <nav className="fixed bottom-4 left-1/2 z-40 flex w-[min(92vw,520px)] -translate-x-1/2 items-center justify-around rounded-2xl border border-[var(--line)] bg-[var(--sidebar-surface)] px-3 py-2 backdrop-blur-xl md:hidden">
+    <nav className="fixed bottom-4 left-1/2 z-40 flex w-[min(92vw,520px)] -translate-x-1/2 items-center justify-around rounded-2xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 shadow-[0_10px_26px_rgba(20,20,16,0.12)] backdrop-blur-xl md:hidden">
       <Link className="mobile-nav-link" data-active={isActive(pathname, "/library")} href="/library">
-        <LibraryIcon className="size-3.5" />
+        <LibraryIcon className="size-4.5" />
         Library
       </Link>
       <Link className="mobile-nav-link" data-active={isActive(pathname, "/progress")} href="/progress">
-        <ProgressIcon className="size-3.5" />
+        <ProgressIcon className="size-4.5" />
         Study
       </Link>
       <Link className="mobile-nav-link" data-active={isActive(pathname, "/settings")} href="/settings">
-        <SettingsIcon className="size-3.5" />
+        <SettingsIcon className="size-4.5" />
         Settings
       </Link>
       {isAdmin ? (

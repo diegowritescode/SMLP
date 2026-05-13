@@ -19,6 +19,7 @@ const themeOptions: Array<{ value: ReaderTheme; label: string; colors: [string, 
   { value: "sage-green", label: "Green", colors: ["#e5efe8", "#fffdf7", "#89b05f"] },
   { value: "graphite-night", label: "Night", colors: ["#131518", "#21252a", "#aacd69"] },
   { value: "focus-ink", label: "Focus", colors: ["#edf1f4", "#ffffff", "#5f9d5f"] },
+  { value: "github-slate", label: "GitHub", colors: ["#0f1722", "#1f2937", "#2f81f7"] },
 ];
 
 const fontOptions: Array<{ value: ReaderFontFamily; label: string }> = [
@@ -79,10 +80,10 @@ export function ReaderSettings() {
   }, [open]);
 
   const isActivePill = (active: boolean) =>
-    `rounded-full border px-3 py-1 text-xs transition-colors ${
+    `rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
       active
-        ? "border-[var(--accent)] bg-[var(--accent)] text-zinc-900"
-        : "border-[var(--line)] bg-[var(--paper)] text-[var(--text-soft)] hover:text-[var(--text-main)]"
+        ? "border-[var(--text-main)] bg-[var(--text-main)] text-[var(--paper)]"
+        : "border-[var(--line)] bg-[var(--surface)] text-[var(--text-soft)] hover:text-[var(--text-main)] hover:bg-[var(--paper-soft)]"
     }`;
 
   return (
@@ -92,34 +93,35 @@ export function ReaderSettings() {
       </button>
 
       {open ? (
-        <section className="floating-panel absolute right-0 top-[calc(100%+10px)] z-50 w-[340px] max-w-[calc(100vw-20px)] p-4">
-          <p className="mb-3 text-xs uppercase tracking-wide text-[var(--text-muted)]">Apariencia de lectura</p>
+        <section className="floating-panel absolute right-0 top-[calc(100%+10px)] z-50 w-[380px] max-w-[calc(100vw-16px)] p-4">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">Apariencia de lectura</p>
 
           <div className="space-y-2">
-            <p className="text-xs text-[var(--text-soft)]">Tema</p>
-            <div className="grid grid-cols-5 gap-2">
+            <p className="text-sm font-medium text-[var(--text-soft)]">Tema</p>
+            <div className="grid grid-cols-3 gap-2">
               {themeOptions.map((option) => (
                 <button
                   key={option.value}
                   type="button"
                   onClick={() => setPrefs((prev) => ({ ...prev, theme: option.value }))}
-                  className={`reader-theme-swatch p-1 ${prefs.theme === option.value ? "ring-2 ring-[var(--accent)] ring-offset-1 ring-offset-transparent" : ""}`}
+                  className={`reader-theme-swatch p-2 ${prefs.theme === option.value ? "ring-2 ring-[var(--text-main)] ring-offset-1 ring-offset-transparent" : ""}`}
                   title={option.label}
                   aria-label={`Tema ${option.label}`}
                 >
                   <span
-                    className="block h-7 w-full rounded-[10px]"
+                    className="block h-7 w-full rounded-[8px]"
                     style={{
                       background: `linear-gradient(120deg, ${option.colors[0]} 0%, ${option.colors[1]} 70%)`,
                     }}
                   />
+                  <span className="mt-1 block truncate text-xs font-medium text-[var(--text-soft)]">{option.label}</span>
                 </button>
               ))}
             </div>
           </div>
 
           <div className="mt-4 space-y-2">
-            <p className="text-xs text-[var(--text-soft)]">Fuente</p>
+            <p className="text-sm font-medium text-[var(--text-soft)]">Fuente</p>
             <div className="flex flex-wrap gap-2">
               {fontOptions.map((option) => (
                 <button
@@ -135,7 +137,7 @@ export function ReaderSettings() {
           </div>
 
           <div className="mt-4 space-y-2">
-            <p className="text-xs text-[var(--text-soft)]">Tamaño</p>
+            <p className="text-sm font-medium text-[var(--text-soft)]">Tamaño</p>
             <div className="flex flex-wrap gap-2">
               {fontSizeOptions.map((option) => (
                 <button
@@ -151,7 +153,7 @@ export function ReaderSettings() {
           </div>
 
           <div className="mt-4 space-y-2">
-            <p className="text-xs text-[var(--text-soft)]">Interlineado</p>
+            <p className="text-sm font-medium text-[var(--text-soft)]">Interlineado</p>
             <div className="flex flex-wrap gap-2">
               {lineHeightOptions.map((option) => (
                 <button
@@ -167,7 +169,7 @@ export function ReaderSettings() {
           </div>
 
           <div className="mt-4 space-y-2">
-            <p className="text-xs text-[var(--text-soft)]">Columnas</p>
+            <p className="text-sm font-medium text-[var(--text-soft)]">Columnas</p>
             <div className="flex flex-wrap gap-2">
               {columnOptions.map((option) => (
                 <button

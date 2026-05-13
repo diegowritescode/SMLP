@@ -32,21 +32,22 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
   const grants = (grantsRaw ?? []) as unknown as GrantRow[];
 
   return (
-    <section className="space-y-6">
-      <header>
-        <h1 className="text-2xl font-semibold text-[var(--text-main)]">Admin · Usuarios y Access Grants</h1>
+    <section className="space-y-6 pb-8">
+      <header className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[0_12px_30px_rgba(20,20,16,0.06)]">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--text-muted)]">Admin</p>
+        <h1 className="mt-2 text-3xl font-semibold text-[var(--text-main)]">Usuarios y Access Grants</h1>
       </header>
 
       {params.ok ? <FeedbackBanner type="success" message="Operacion completada correctamente." /> : null}
       {params.error ? <FeedbackBanner type="error" message={decodeURIComponent(params.error)} /> : null}
 
-      <article className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/90 p-4 shadow-[0_10px_30px_rgba(20,20,16,0.08)]">
-        <h2 className="mb-3 text-base font-semibold text-[var(--text-main)]">Crear grant manual</h2>
+      <article className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[0_10px_24px_rgba(20,20,16,0.06)]">
+        <h2 className="mb-3 text-xl font-semibold text-[var(--text-main)]">Crear grant manual</h2>
         <form action={createAccessGrant} className="grid grid-cols-1 gap-3 md:grid-cols-4">
           <select
             name="userId"
             required
-            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text-main)] outline-none ring-0 transition focus:border-[var(--accent)]"
+            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-base font-medium text-[var(--text-main)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
           >
             <option value="">Selecciona usuario</option>
             {(users ?? []).map((user) => (
@@ -59,7 +60,7 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
           <select
             name="bookId"
             required
-            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text-main)] outline-none ring-0 transition focus:border-[var(--accent)]"
+            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-base font-medium text-[var(--text-main)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
           >
             <option value="">Selecciona libro</option>
             {(books ?? []).map((book) => (
@@ -71,7 +72,7 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
 
           <select
             name="accessType"
-            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text-main)] outline-none ring-0 transition focus:border-[var(--accent)]"
+            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-base font-medium text-[var(--text-main)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
           >
             <option value="manual">manual</option>
             <option value="trial">trial</option>
@@ -82,32 +83,32 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
           <input
             type="datetime-local"
             name="expiresAt"
-            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--text-main)] outline-none ring-0 transition focus:border-[var(--accent)]"
+            className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-3 py-2 text-base font-medium text-[var(--text-main)] outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/18"
           />
 
           <button
             type="submit"
-            className="rounded-xl border border-[var(--line)] bg-[var(--text-main)] px-4 py-2 text-sm font-medium text-[var(--paper)] transition hover:opacity-90 md:col-span-4"
+            className="rounded-xl border border-[var(--text-main)] bg-[var(--text-main)] px-4 py-2 text-base font-semibold text-[var(--paper)] transition hover:opacity-90 md:col-span-4"
           >
             Guardar grant
           </button>
         </form>
       </article>
 
-      <article className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/90 p-4 shadow-[0_10px_30px_rgba(20,20,16,0.08)]">
-        <h2 className="mb-3 text-base font-semibold text-[var(--text-main)]">Usuarios</h2>
+      <article className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[0_10px_24px_rgba(20,20,16,0.06)]">
+        <h2 className="mb-3 text-xl font-semibold text-[var(--text-main)]">Usuarios</h2>
         <ul className="space-y-2">
           {(users ?? []).map((user) => (
-            <li key={user.id} className="rounded-xl border border-[var(--line)] bg-[var(--surface)]/72 p-3 text-sm">
-              <span className="font-medium text-[var(--text-main)]">{user.email}</span>
-              <span className="ml-2 text-xs text-[var(--text-muted)]">({user.role})</span>
+            <li key={user.id} className="rounded-2xl border border-[var(--line)] bg-[var(--paper-soft)] p-3.5 text-base">
+              <span className="font-semibold text-[var(--text-main)]">{user.email}</span>
+              <span className="ml-2 text-sm text-[var(--text-muted)]">({user.role})</span>
             </li>
           ))}
         </ul>
       </article>
 
-      <article className="rounded-2xl border border-[var(--line)] bg-[var(--paper)]/90 p-4 shadow-[0_10px_30px_rgba(20,20,16,0.08)]">
-        <h2 className="mb-3 text-base font-semibold text-[var(--text-main)]">Grants activos</h2>
+      <article className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[0_10px_24px_rgba(20,20,16,0.06)]">
+        <h2 className="mb-3 text-xl font-semibold text-[var(--text-main)]">Grants activos</h2>
         <ul className="space-y-2">
           {grants.map((grant) => {
             const profileEmail = Array.isArray(grant.profiles) ? grant.profiles[0]?.email : grant.profiles?.email;
@@ -115,13 +116,13 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
             return (
               <li
                 key={grant.id}
-                className="flex flex-col gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)]/72 p-3 text-sm md:flex-row md:items-center md:justify-between"
+                className="flex flex-col gap-2 rounded-2xl border border-[var(--line)] bg-[var(--paper-soft)] p-3.5 text-base md:flex-row md:items-center md:justify-between"
               >
                 <div>
-                  <p className="font-medium text-[var(--text-main)]">
+                  <p className="font-semibold text-[var(--text-main)]">
                     {profileEmail ?? "usuario"} → {bookTitle ?? "libro"}
                   </p>
-                  <p className="text-xs text-[var(--text-muted)]">
+                  <p className="text-sm text-[var(--text-muted)]">
                     {grant.access_type} | inicio: {new Date(grant.starts_at).toLocaleString()} | expira: {grant.expires_at ? new Date(grant.expires_at).toLocaleString() : "sin expiracion"}
                   </p>
                 </div>
@@ -129,7 +130,7 @@ export default async function AdminUsersPage({ searchParams }: AdminUsersPagePro
                   <input type="hidden" name="id" value={grant.id} />
                   <button
                     type="submit"
-                    className="rounded-full border border-red-500/45 bg-[var(--paper)] px-3 py-2 text-xs text-red-600 transition hover:bg-red-500/10"
+                    className="rounded-full border border-[var(--line)] bg-[var(--surface)] px-3.5 py-2 text-sm font-medium text-[var(--text-soft)] transition hover:bg-[var(--paper-soft)] hover:text-[var(--text-main)]"
                   >
                     Revocar
                   </button>

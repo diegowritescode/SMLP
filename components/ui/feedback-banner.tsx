@@ -4,17 +4,14 @@ interface FeedbackBannerProps {
 }
 
 const styles = {
-  success:
-    "border-[var(--border-soft)] bg-[color:var(--surface-muted)] text-[var(--success)]",
-  error:
-    "border-[var(--border-soft)] bg-[color:var(--surface-muted)] text-[var(--danger)]",
-  info:
-    "border-[var(--border-soft)] bg-[color:var(--surface-muted)] text-[var(--text-secondary)]",
+  success: "border-[var(--line)] bg-[var(--surface)] text-[var(--success)]",
+  error: "border-[var(--line)] bg-[var(--surface)] text-[var(--danger)]",
+  info: "border-[var(--line)] bg-[var(--surface)] text-[var(--text-soft)]",
 };
 
 export function FeedbackBanner({ type, message }: FeedbackBannerProps) {
   return (
-    <div className={`rounded-lg border px-4 py-3 text-sm ${styles[type]}`} role="status" aria-live="polite">
+    <div className={`rounded-2xl border px-4 py-3 text-sm shadow-[0_8px_20px_rgba(20,20,16,0.05)] ${styles[type]}`} role="status" aria-live="polite">
       {message}
     </div>
   );
